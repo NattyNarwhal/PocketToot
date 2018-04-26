@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PocketToot", "PocketToot\PocketToot.csproj", "{1E346313-8D72-44DE-AFDE-0D21CE2FCB4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PocketToot.Core", "PocketToot.Core\PocketToot.Core.csproj", "{A20F504D-7173-4954-8E6A-709A46E44DAF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E346313-8D72-44DE-AFDE-0D21CE2FCB4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E346313-8D72-44DE-AFDE-0D21CE2FCB4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E346313-8D72-44DE-AFDE-0D21CE2FCB4C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1E346313-8D72-44DE-AFDE-0D21CE2FCB4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E346313-8D72-44DE-AFDE-0D21CE2FCB4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E346313-8D72-44DE-AFDE-0D21CE2FCB4C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A20F504D-7173-4954-8E6A-709A46E44DAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A20F504D-7173-4954-8E6A-709A46E44DAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A20F504D-7173-4954-8E6A-709A46E44DAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A20F504D-7173-4954-8E6A-709A46E44DAF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
