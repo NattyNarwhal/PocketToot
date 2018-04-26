@@ -14,13 +14,13 @@ namespace PocketToot
             {
                 return JsonConvert.DeserializeObject<T>(json);
             }
-            catch (JsonSerializationException)
+            catch (JsonSerializationException e)
             {
                 var error = JsonConvert.DeserializeObject<Types.Error>(json);
                 if (error != null && error.Message != null)
                     throw new ApiException(error);
                 else
-                    throw new Exception("Shouldn't reach here!");
+                    throw e;
             }
         }
     }

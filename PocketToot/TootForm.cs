@@ -240,11 +240,15 @@ namespace PocketToot
                 // TODO: AccountForm
                 else if (match is Types.Mention)
                 {
-
+                    var mention = (Types.Mention)match;
+                    var af = new AccountForm(_ac, mention);
+                    af.Show();
                 }
                 else if (match is Types.Account)
                 {
-
+                    var account = (Types.Account)match;
+                    var af = new AccountForm(_ac, account);
+                    af.Show();
                 }
             }
         }

@@ -60,6 +60,9 @@ namespace PocketToot.Types
         [JsonProperty("statuses_count")]
         public int Statuses { get; set; }
 
+        [JsonProperty("moved")]
+        public Account MovedTo { get; set; }
+
         public override string ToString()
         {
             var dispName = string.IsNullOrEmpty(DisplayName) ? UserName : DisplayName;
