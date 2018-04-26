@@ -6,10 +6,10 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("PocketToot.Core")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Windows CE Mastodon client (Core Library)")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PocketToot.Core")]
+[assembly: AssemblyCompany("@calvin@cronk.stenoweb.net")]
+[assembly: AssemblyProduct("PocketToot")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
