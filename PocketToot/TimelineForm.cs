@@ -116,6 +116,41 @@ namespace PocketToot
             }
         }
 
+        public void ShowMore()
+        {
+            if (statusListView.Items.Count == 0)
+            {
+                Refresh();
+                return;
+            }
+
+            var qs = new QueryString();
+            qs.Add("max_id", statusListView.Items.Last().Id.ToString());
+
+            var routeWithQs = string.Format("{0}?{1}", _timelineRoute, qs.ToQueryString());
+            try
+            {
+                var s = _ac.Get(routeWithQs);
+                var sl = JsonUtility.MaybeDeserialize<List<Types.Status>>(s);
+                
+                // don't clear, we append!
+                foreach (var status in sl)
+                {
+                    statusListView.Items.Add(status);
+                }
+            }
+            catch (Exception e)
+            {
+                // let dispatch handle it
+                ErrorDispatcher.ShowError(e, "Refreshing Timeline");
+            }
+            finally
+            {
+                statusListView.EndUpdate();
+                ResizeColumn();
+            }
+        }
+
         private void refreshMenuItem_Click(object sender, EventArgs e)
         {
             RefreshTimeline();
@@ -168,6 +203,11 @@ namespace PocketToot
                 var tf = new TimelineForm(_ac, tagRoute, "#" + tag);
                 tf.Show();
             }
+        }
+
+        private void showMoreMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowMore();
         }
     }
 }

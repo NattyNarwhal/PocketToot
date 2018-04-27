@@ -39,6 +39,7 @@
             this.sep1 = new System.Windows.Forms.MenuItem();
             this.settingsMenuItem = new System.Windows.Forms.MenuItem();
             this.statusListView = new PocketToot.TootListView();
+            this.showMoreMenuItem = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -48,13 +49,14 @@
             // 
             // composeMenuItem
             // 
-            this.composeMenuItem.Text = "&Compose...";
+            this.composeMenuItem.Text = "&Compose";
             this.composeMenuItem.Click += new System.EventHandler(this.composeMenuItem_Click);
             // 
             // menu
             // 
             this.menu.MenuItems.Add(this.timelineMenu);
             this.menu.MenuItems.Add(this.refreshMenuItem);
+            this.menu.MenuItems.Add(this.showMoreMenuItem);
             this.menu.MenuItems.Add(this.sep1);
             this.menu.MenuItems.Add(this.settingsMenuItem);
             this.menu.Text = "&Menu";
@@ -102,6 +104,11 @@
             this.statusListView.View = System.Windows.Forms.View.Details;
             this.statusListView.ItemActivate += new System.EventHandler(this.listView1_ItemActivate);
             // 
+            // showMoreMenuItem
+            // 
+            this.showMoreMenuItem.Text = "Show &More";
+            this.showMoreMenuItem.Click += new System.EventHandler(this.showMoreMenuItem_Click);
+            // 
             // TimelineForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -128,6 +135,7 @@
         private System.Windows.Forms.MenuItem publicTimelineMenuItem;
         private System.Windows.Forms.MenuItem tagTimelineMenuItem;
         private TootListView statusListView;
+        private System.Windows.Forms.MenuItem showMoreMenuItem;
 
     }
 }
