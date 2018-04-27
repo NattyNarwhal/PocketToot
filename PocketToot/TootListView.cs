@@ -7,24 +7,16 @@ using System.Windows.Forms;
 namespace PocketToot
 {
     // could be nicer
-    public class TootListView : ListView
+    public class TootListView : SingleColumnListView, IBaseListView
     {
-        ColumnHeader _header;
-
         public TootListView()
             : base()
         {
             Items = new TootListViewItemCollection(this);
-
-            _header = new ColumnHeader();
-            Columns.Add(_header);
-
-            FullRowSelect = true;
-            HeaderStyle = ColumnHeaderStyle.None;
-            View = View.Details;
         }
 
-        internal ListView.ListViewItemCollection BaseItems
+        // TODO: see the TODO on IBaseListView
+        public ListView.ListViewItemCollection BaseItems
         {
             get
             {
@@ -46,18 +38,6 @@ namespace PocketToot
                 {
                     yield return Items[i];
                 }
-            }
-        }
-
-        public int ItemWidth
-        {
-            get
-            {
-                return _header.Width;
-            }
-            set
-            {
-                _header.Width = value;
             }
         }
     }

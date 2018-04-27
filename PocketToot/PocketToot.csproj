@@ -74,6 +74,10 @@
       <DependentUpon>ComposeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ErrorDispatcher.cs" />
+    <Compile Include="IBaseListView.cs" />
+    <Compile Include="SingleColumnListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TimelineForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -128,6 +132,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="TootListViewItemCollection.cs" />
+    <Compile Include="TypedListViewItemCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PocketToot.Core\PocketToot.Core.csproj">
