@@ -88,20 +88,30 @@ namespace PocketToot
 
         public void RefreshTimeline()
         {
+            RefreshTimeline(_timelineRoute, true, false);
+        }
+
+        public void RefreshTimeline(string route, bool clear, bool insertAbove)
+        {
             // TODO: some smart algorithm where we can splice in new statuses
 
             statusListView.BeginUpdate();
 
             try
             {
-                var s = _ac.Get(_timelineRoute);
+                var s = _ac.Get(route);
                 var sl = JsonUtility.MaybeDeserialize<List<Types.Status>>(s);
 
-                statusListView.Items.Clear();
+                if (clear)
+                    statusListView.Items.Clear();
 
+                var posWhenAbove = 0;
                 foreach (var status in sl)
                 {
-                    statusListView.Items.Add(status);
+                    if (insertAbove)
+                        statusListView.Items.Insert(posWhenAbove++, status);
+                    else
+                        statusListView.Items.Add(status);
                 }
             }
             catch (Exception e)
@@ -128,32 +138,23 @@ namespace PocketToot
             qs.Add("max_id", statusListView.Items.Last().Id.ToString());
 
             var routeWithQs = string.Format("{0}?{1}", _timelineRoute, qs.ToQueryString());
-            try
-            {
-                var s = _ac.Get(routeWithQs);
-                var sl = JsonUtility.MaybeDeserialize<List<Types.Status>>(s);
-                
-                // don't clear, we append!
-                foreach (var status in sl)
-                {
-                    statusListView.Items.Add(status);
-                }
-            }
-            catch (Exception e)
-            {
-                // let dispatch handle it
-                ErrorDispatcher.ShowError(e, "Refreshing Timeline");
-            }
-            finally
-            {
-                statusListView.EndUpdate();
-                ResizeColumn();
-            }
+            RefreshTimeline(routeWithQs, false, false);
         }
 
         private void refreshMenuItem_Click(object sender, EventArgs e)
         {
-            RefreshTimeline();
+            // this menu item now just pulls in new and doesnt replace
+            if (statusListView.Items.Count == 0)
+            {
+                Refresh();
+                return;
+            }
+
+            var qs = new QueryString();
+            qs.Add("since_id", statusListView.Items.First().Id.ToString());
+
+            var routeWithQs = string.Format("{0}?{1}", _timelineRoute, qs.ToQueryString());
+            RefreshTimeline(routeWithQs, false, true);
         }
 
         public void ShowSettings()
