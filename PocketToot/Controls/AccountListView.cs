@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 namespace PocketToot
 {
+    // TODO: pivot this and TLV into a TypedSingleColumnListView
     public class AccountListView : SingleColumnListView, IBaseListView
     {
         public AccountListView()

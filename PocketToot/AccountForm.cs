@@ -82,6 +82,8 @@ namespace PocketToot
 
             bioBox.DocumentText = _account.Note;
 
+            // TODO: We scroll in more of all of these
+
             statusesBox.BeginUpdate();
             statusesBox.Items.Clear();
             foreach (var status in _statuses)
@@ -90,12 +92,28 @@ namespace PocketToot
             }
             statusesBox.EndUpdate();
             statusesBox.ItemWidth = -1;
-            statusPage.Text = string.Format("Statuses ({0})", _statuses.Count);
+            statusPage.Text = string.Format("Statuses ({0})", _account.Statuses);
 
-            // TODO: impl accounts list views
-            followingPage.Text = string.Format("Following ({0})", _following.Count);
+            followingBox.BeginUpdate();
+            followingBox.Items.Clear();
+            foreach (var account in _following)
+            {
+                followingBox.Items.Add(account);
+            }
+            followingBox.EndUpdate();
+            followingBox.ItemWidth = -1;
+            followingPage.Text = string.Format("Following ({0})", _account.Following);
+
+            followersBox.BeginUpdate();
+            followersBox.Items.Clear();
+            foreach (var account in _followers)
+            {
+                followersBox.Items.Add(account);
+            }
+            followersBox.EndUpdate();
+            followersBox.ItemWidth = -1;
             followersPage.Text = string.Format("Followers ({0}{1})",
-                _followers.Count,
+                _account.Followers,
                 _account.Locked ? ", Locked" : "");
         }
 
@@ -123,6 +141,24 @@ namespace PocketToot
         private void copyLinkMenuItem_Click(object sender, EventArgs e)
         {
             Clipboard.SetDataObject(_account.Url);
+        }
+
+        private void followersBox_ItemActivate(object sender, EventArgs e)
+        {
+            var account = followersBox.SelectedItems.FirstOrDefault();
+            if (account != null)
+            {
+                var af = new AccountForm(_ac, account);
+            }
+        }
+
+        private void followingBox_ItemActivate(object sender, EventArgs e)
+        {
+            var account = followingBox.SelectedItems.FirstOrDefault();
+            if (account != null)
+            {
+                var af = new AccountForm(_ac, account);
+            }
         }
     }
 }

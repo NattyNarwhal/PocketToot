@@ -30,88 +30,29 @@
         private void InitializeComponent()
         {
             this.mainMenu1 = new System.Windows.Forms.MainMenu();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.statusPage = new System.Windows.Forms.TabPage();
-            this.followersPage = new System.Windows.Forms.TabPage();
-            this.followingPage = new System.Windows.Forms.TabPage();
-            this.notesPage = new System.Windows.Forms.TabPage();
-            this.bioBox = new System.Windows.Forms.WebBrowser();
-            this.statusesBox = new PocketToot.TootListView();
             this.menu = new System.Windows.Forms.MenuItem();
             this.refreshMenuItem = new System.Windows.Forms.MenuItem();
             this.browserMenuItem = new System.Windows.Forms.MenuItem();
             this.copyLinkMenuItem = new System.Windows.Forms.MenuItem();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.notesPage = new System.Windows.Forms.TabPage();
+            this.bioBox = new System.Windows.Forms.WebBrowser();
+            this.statusPage = new System.Windows.Forms.TabPage();
+            this.followersPage = new System.Windows.Forms.TabPage();
+            this.followingPage = new System.Windows.Forms.TabPage();
+            this.statusesBox = new PocketToot.TootListView();
+            this.followersBox = new PocketToot.AccountListView();
+            this.followingBox = new PocketToot.AccountListView();
             this.tabControl1.SuspendLayout();
-            this.statusPage.SuspendLayout();
             this.notesPage.SuspendLayout();
+            this.statusPage.SuspendLayout();
+            this.followersPage.SuspendLayout();
+            this.followingPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenu1
             // 
             this.mainMenu1.MenuItems.Add(this.menu);
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.notesPage);
-            this.tabControl1.Controls.Add(this.statusPage);
-            this.tabControl1.Controls.Add(this.followersPage);
-            this.tabControl1.Controls.Add(this.followingPage);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(240, 268);
-            this.tabControl1.TabIndex = 1;
-            // 
-            // statusPage
-            // 
-            this.statusPage.Controls.Add(this.statusesBox);
-            this.statusPage.Location = new System.Drawing.Point(0, 0);
-            this.statusPage.Name = "statusPage";
-            this.statusPage.Size = new System.Drawing.Size(240, 245);
-            this.statusPage.Text = "Statuses";
-            // 
-            // followersPage
-            // 
-            this.followersPage.Location = new System.Drawing.Point(0, 0);
-            this.followersPage.Name = "followersPage";
-            this.followersPage.Size = new System.Drawing.Size(232, 242);
-            this.followersPage.Text = "Followers";
-            // 
-            // followingPage
-            // 
-            this.followingPage.Location = new System.Drawing.Point(0, 0);
-            this.followingPage.Name = "followingPage";
-            this.followingPage.Size = new System.Drawing.Size(232, 242);
-            this.followingPage.Text = "Following";
-            // 
-            // notesPage
-            // 
-            this.notesPage.Controls.Add(this.bioBox);
-            this.notesPage.Location = new System.Drawing.Point(0, 0);
-            this.notesPage.Name = "notesPage";
-            this.notesPage.Size = new System.Drawing.Size(240, 245);
-            this.notesPage.Text = "Bio";
-            // 
-            // bioBox
-            // 
-            this.bioBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bioBox.Location = new System.Drawing.Point(0, 0);
-            this.bioBox.Name = "bioBox";
-            this.bioBox.Size = new System.Drawing.Size(240, 245);
-            // 
-            // statusesBox
-            // 
-            this.statusesBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.statusesBox.FullRowSelect = true;
-            this.statusesBox.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.statusesBox.ItemWidth = 60;
-            this.statusesBox.Location = new System.Drawing.Point(0, 0);
-            this.statusesBox.Name = "statusesBox";
-            this.statusesBox.Size = new System.Drawing.Size(240, 245);
-            this.statusesBox.TabIndex = 0;
-            this.statusesBox.View = System.Windows.Forms.View.Details;
-            this.statusesBox.ItemActivate += new System.EventHandler(this.statusesBox_ItemActivate);
             // 
             // menu
             // 
@@ -135,6 +76,97 @@
             this.copyLinkMenuItem.Text = "&Copy Permalink";
             this.copyLinkMenuItem.Click += new System.EventHandler(this.copyLinkMenuItem_Click);
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.notesPage);
+            this.tabControl1.Controls.Add(this.statusPage);
+            this.tabControl1.Controls.Add(this.followersPage);
+            this.tabControl1.Controls.Add(this.followingPage);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(240, 268);
+            this.tabControl1.TabIndex = 1;
+            // 
+            // notesPage
+            // 
+            this.notesPage.Controls.Add(this.bioBox);
+            this.notesPage.Location = new System.Drawing.Point(0, 0);
+            this.notesPage.Name = "notesPage";
+            this.notesPage.Size = new System.Drawing.Size(240, 245);
+            this.notesPage.Text = "Bio";
+            // 
+            // bioBox
+            // 
+            this.bioBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bioBox.Location = new System.Drawing.Point(0, 0);
+            this.bioBox.Name = "bioBox";
+            this.bioBox.Size = new System.Drawing.Size(240, 245);
+            // 
+            // statusPage
+            // 
+            this.statusPage.Controls.Add(this.statusesBox);
+            this.statusPage.Location = new System.Drawing.Point(0, 0);
+            this.statusPage.Name = "statusPage";
+            this.statusPage.Size = new System.Drawing.Size(232, 242);
+            this.statusPage.Text = "Statuses";
+            // 
+            // followersPage
+            // 
+            this.followersPage.Controls.Add(this.followersBox);
+            this.followersPage.Location = new System.Drawing.Point(0, 0);
+            this.followersPage.Name = "followersPage";
+            this.followersPage.Size = new System.Drawing.Size(240, 245);
+            this.followersPage.Text = "Followers";
+            // 
+            // followingPage
+            // 
+            this.followingPage.Controls.Add(this.followingBox);
+            this.followingPage.Location = new System.Drawing.Point(0, 0);
+            this.followingPage.Name = "followingPage";
+            this.followingPage.Size = new System.Drawing.Size(240, 245);
+            this.followingPage.Text = "Following";
+            // 
+            // statusesBox
+            // 
+            this.statusesBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statusesBox.FullRowSelect = true;
+            this.statusesBox.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.statusesBox.ItemWidth = 60;
+            this.statusesBox.Location = new System.Drawing.Point(0, 0);
+            this.statusesBox.Name = "statusesBox";
+            this.statusesBox.Size = new System.Drawing.Size(232, 242);
+            this.statusesBox.TabIndex = 0;
+            this.statusesBox.View = System.Windows.Forms.View.Details;
+            this.statusesBox.ItemActivate += new System.EventHandler(this.statusesBox_ItemActivate);
+            // 
+            // followersBox
+            // 
+            this.followersBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.followersBox.FullRowSelect = true;
+            this.followersBox.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.followersBox.ItemWidth = 60;
+            this.followersBox.Location = new System.Drawing.Point(0, 0);
+            this.followersBox.Name = "followersBox";
+            this.followersBox.Size = new System.Drawing.Size(240, 245);
+            this.followersBox.TabIndex = 0;
+            this.followersBox.View = System.Windows.Forms.View.Details;
+            this.followersBox.ItemActivate += new System.EventHandler(this.followersBox_ItemActivate);
+            // 
+            // followingBox
+            // 
+            this.followingBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.followingBox.FullRowSelect = true;
+            this.followingBox.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.followingBox.ItemWidth = 60;
+            this.followingBox.Location = new System.Drawing.Point(0, 0);
+            this.followingBox.Name = "followingBox";
+            this.followingBox.Size = new System.Drawing.Size(240, 245);
+            this.followingBox.TabIndex = 0;
+            this.followingBox.View = System.Windows.Forms.View.Details;
+            this.followingBox.ItemActivate += new System.EventHandler(this.followingBox_ItemActivate);
+            // 
             // AccountForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -146,8 +178,10 @@
             this.Name = "AccountForm";
             this.Text = "AccountForm";
             this.tabControl1.ResumeLayout(false);
-            this.statusPage.ResumeLayout(false);
             this.notesPage.ResumeLayout(false);
+            this.statusPage.ResumeLayout(false);
+            this.followersPage.ResumeLayout(false);
+            this.followingPage.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -165,5 +199,7 @@
         private System.Windows.Forms.MenuItem refreshMenuItem;
         private System.Windows.Forms.MenuItem browserMenuItem;
         private System.Windows.Forms.MenuItem copyLinkMenuItem;
+        private AccountListView followersBox;
+        private AccountListView followingBox;
     }
 }
