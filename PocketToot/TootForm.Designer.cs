@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TootForm));
             this.mainMenu1 = new System.Windows.Forms.MainMenu();
             this.replyMenuItem = new System.Windows.Forms.MenuItem();
             this.menu = new System.Windows.Forms.MenuItem();
@@ -48,9 +47,7 @@
             this.threadPage = new System.Windows.Forms.TabPage();
             this.threadBox = new PocketToot.TootListView();
             this.attachmentsPage = new System.Windows.Forms.TabPage();
-            this.attachmentsBox = new System.Windows.Forms.ListView();
-            this.attachmentDescriptionHeader = new System.Windows.Forms.ColumnHeader();
-            this.imageList1 = new System.Windows.Forms.ImageList();
+            this.attachmentsBox = new PocketToot.AttachmentListView();
             this.tabControl1.SuspendLayout();
             this.contentsTab.SuspendLayout();
             this.threadPage.SuspendLayout();
@@ -172,7 +169,7 @@
             this.threadPage.Controls.Add(this.threadBox);
             this.threadPage.Location = new System.Drawing.Point(0, 0);
             this.threadPage.Name = "threadPage";
-            this.threadPage.Size = new System.Drawing.Size(240, 245);
+            this.threadPage.Size = new System.Drawing.Size(232, 242);
             this.threadPage.Text = "Thread";
             // 
             // threadBox
@@ -183,7 +180,7 @@
             this.threadBox.ItemWidth = 60;
             this.threadBox.Location = new System.Drawing.Point(0, 0);
             this.threadBox.Name = "threadBox";
-            this.threadBox.Size = new System.Drawing.Size(240, 245);
+            this.threadBox.Size = new System.Drawing.Size(232, 242);
             this.threadBox.TabIndex = 0;
             this.threadBox.View = System.Windows.Forms.View.Details;
             this.threadBox.ItemActivate += new System.EventHandler(this.threadBox_ItemActivate);
@@ -193,29 +190,21 @@
             this.attachmentsPage.Controls.Add(this.attachmentsBox);
             this.attachmentsPage.Location = new System.Drawing.Point(0, 0);
             this.attachmentsPage.Name = "attachmentsPage";
-            this.attachmentsPage.Size = new System.Drawing.Size(232, 242);
+            this.attachmentsPage.Size = new System.Drawing.Size(240, 245);
             this.attachmentsPage.Text = "Attached";
             // 
             // attachmentsBox
             // 
-            this.attachmentsBox.Columns.Add(this.attachmentDescriptionHeader);
             this.attachmentsBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.attachmentsBox.FullRowSelect = true;
+            this.attachmentsBox.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.attachmentsBox.ItemWidth = 60;
             this.attachmentsBox.Location = new System.Drawing.Point(0, 0);
             this.attachmentsBox.Name = "attachmentsBox";
-            this.attachmentsBox.Size = new System.Drawing.Size(232, 242);
-            this.attachmentsBox.SmallImageList = this.imageList1;
+            this.attachmentsBox.Size = new System.Drawing.Size(240, 245);
             this.attachmentsBox.TabIndex = 0;
             this.attachmentsBox.View = System.Windows.Forms.View.Details;
             this.attachmentsBox.ItemActivate += new System.EventHandler(this.attachmentsBox_ItemActivate);
-            // 
-            // attachmentDescriptionHeader
-            // 
-            this.attachmentDescriptionHeader.Text = "Description";
-            this.attachmentDescriptionHeader.Width = 200;
-            this.imageList1.Images.Clear();
-            this.imageList1.Images.Add(((System.Drawing.Icon)(resources.GetObject("resource"))));
-            this.imageList1.Images.Add(((System.Drawing.Icon)(resources.GetObject("resource1"))));
-            this.imageList1.Images.Add(((System.Drawing.Icon)(resources.GetObject("resource2"))));
             // 
             // TootForm
             // 
@@ -249,9 +238,6 @@
         private System.Windows.Forms.MenuItem sep1;
         private System.Windows.Forms.MenuItem browserMenuItem;
         private System.Windows.Forms.MenuItem copyLinkMenuItem;
-        private System.Windows.Forms.ListView attachmentsBox;
-        private System.Windows.Forms.ColumnHeader attachmentDescriptionHeader;
-        private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.ListView metaListView;
         private System.Windows.Forms.ColumnHeader keyHeader;
@@ -259,6 +245,7 @@
         protected System.Windows.Forms.MainMenu mainMenu1;
         private TootListView threadBox;
         private System.Windows.Forms.MenuItem refreshMenuItem;
+        private AttachmentListView attachmentsBox;
 
 
     }

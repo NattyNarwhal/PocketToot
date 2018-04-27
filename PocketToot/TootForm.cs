@@ -22,6 +22,8 @@ namespace PocketToot
         public TootForm()
         {
             InitializeComponent();
+
+            attachmentsBox.SetUpImageList();
         }
 
         public TootForm(ApiClient ac, Types.Status status)
@@ -98,28 +100,14 @@ namespace PocketToot
             // Attachments
             if (toUse.Attachments.Count > 0)
             {
+                attachmentsBox.BeginUpdate();
+                attachmentsBox.Items.Clear();
                 foreach (var attachment in toUse.Attachments)
                 {
-                    var url = string.IsNullOrEmpty(attachment.LocalUrl) ? attachment.RemoteUrl : attachment.LocalUrl;
-                    var text = string.IsNullOrEmpty(attachment.Description) ? url : attachment.Description;
-                    var lvi = new ListViewItem(text);
-                    lvi.Tag = attachment;
-                    switch (attachment.Type.ToLower())
-                    {
-                        case "image":
-                            lvi.ImageIndex = 1;
-                            break;
-                        case "gifv":
-                        case "video":
-                            lvi.ImageIndex = 2;
-                            break;
-                        case "unknown":
-                        default:
-                            lvi.ImageIndex = 0;
-                            break;
-                    }
-                    attachmentsBox.Items.Add(lvi);
+                    attachmentsBox.Items.Add(attachment);
                 }
+                attachmentsBox.EndUpdate();
+                attachmentsBox.ItemWidth = -1;
             }
             attachmentsPage.Text = string.Format("Attachments ({0})", toUse.Attachments.Count);
 
@@ -194,10 +182,9 @@ namespace PocketToot
             // it would be nice if we could display this in our own viewer, but
             // PictureBox kinda sucks and doesn' do PNG on Compact Framework...
             // and we get OutOfMemory exceptions like crazy if we try anyways
-            if (attachmentsBox.SelectedIndices.Count > 0)
+            var attachment = attachmentsBox.SelectedItems.FirstOrDefault();
+            if (attachment != null)
             {
-                var lvi = attachmentsBox.Items[attachmentsBox.SelectedIndices[0]];
-                var attachment = (Types.Attachment)lvi.Tag;
                 var url = string.IsNullOrEmpty(attachment.LocalUrl) ? attachment.RemoteUrl : attachment.LocalUrl;
                 Process.Start("iexplore", url);
             }

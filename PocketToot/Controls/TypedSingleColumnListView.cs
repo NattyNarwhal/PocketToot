@@ -6,9 +6,8 @@ using System.Windows.Forms;
 
 namespace PocketToot
 {
-    public abstract class TypedSingleColumnListView<TType, TCollection> : SingleColumnListView, IBaseListView
+    public abstract class TypedSingleColumnListView<TType> : SingleColumnListView, IBaseListView
         where TType : class
-        where TCollection : TypedListViewItemCollection<TType>
     {
         public TypedSingleColumnListView()
             : base()
@@ -25,7 +24,7 @@ namespace PocketToot
             }
         }
 
-        public new TCollection Items
+        public new TypedListViewItemCollection<TType> Items
         {
             get;
             protected set;

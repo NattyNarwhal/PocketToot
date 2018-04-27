@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace PocketToot
 {
-    public class AccountListView : TypedSingleColumnListView<Types.Account, AccountListViewItemCollection>
+    public class AccountListView : TypedSingleColumnListView<Types.Account>
     {
         public AccountListView()
             : base()

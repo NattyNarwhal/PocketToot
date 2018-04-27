@@ -78,6 +78,10 @@
     </Compile>
     <Compile Include="Controls\AccountListViewItemCollection.cs">
     </Compile>
+    <Compile Include="Controls\AttachmentListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\AttachmentListViewItemCollection.cs" />
     <Compile Include="Controls\TypedSingleColumnListView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -122,6 +126,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsForm.cs">
@@ -147,6 +152,15 @@
       <Project>{A20F504D-7173-4954-8E6A-709A46E44DAF}</Project>
       <Name>PocketToot.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AttachmentPicture.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AttachmentUnknown.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AttachmentVideo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>

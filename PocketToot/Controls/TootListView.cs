@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace PocketToot
 {
     // could be nicer
-    public class TootListView : TypedSingleColumnListView<Types.Status, TootListViewItemCollection>
+    public class TootListView : TypedSingleColumnListView<Types.Status>
     {
         public TootListView()
             : base()
