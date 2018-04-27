@@ -78,6 +78,9 @@
     </Compile>
     <Compile Include="Controls\AccountListViewItemCollection.cs">
     </Compile>
+    <Compile Include="Controls\TypedSingleColumnListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ErrorDispatcher.cs" />
     <Compile Include="Controls\IBaseListView.cs" />
     <Compile Include="Controls\SingleColumnListView.cs">
