@@ -8,7 +8,7 @@ namespace PocketToot
 {
     public class TootListViewItemCollection : TypedListViewItemCollection<Types.Status>
     {
-        public TootListViewItemCollection(TootListView parent)
+        internal TootListViewItemCollection(TootListView parent)
             : base(parent)
         {
         }

@@ -73,9 +73,14 @@
     <Compile Include="ComposeForm.Designer.cs">
       <DependentUpon>ComposeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AccountListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\AccountListViewItemCollection.cs">
+    </Compile>
     <Compile Include="ErrorDispatcher.cs" />
-    <Compile Include="IBaseListView.cs" />
-    <Compile Include="SingleColumnListView.cs">
+    <Compile Include="Controls\IBaseListView.cs" />
+    <Compile Include="Controls\SingleColumnListView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="TimelineForm.cs">
@@ -128,11 +133,11 @@
     <Compile Include="TootForm.Designer.cs">
       <DependentUpon>TootForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="TootListView.cs">
+    <Compile Include="Controls\TootListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="TootListViewItemCollection.cs" />
-    <Compile Include="TypedListViewItemCollection.cs" />
+    <Compile Include="Controls\TootListViewItemCollection.cs" />
+    <Compile Include="Controls\TypedListViewItemCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PocketToot.Core\PocketToot.Core.csproj">

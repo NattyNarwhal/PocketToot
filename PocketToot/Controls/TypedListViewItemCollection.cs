@@ -31,7 +31,13 @@ namespace PocketToot
             _parent = parent;
         }
 
-        protected abstract ListViewItem CreateListViewItem(T item);
+        protected virtual ListViewItem CreateListViewItem(T item)
+        {
+            var lvi = new ListViewItem();
+            lvi.Tag = item;
+            lvi.Text = item.ToString();
+            return lvi;
+        }
 
         #region IList<Status> Members
 
