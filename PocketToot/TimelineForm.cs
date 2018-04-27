@@ -184,7 +184,17 @@ namespace PocketToot
 
         private void publicTimelineMenuItem_Click(object sender, EventArgs e)
         {
-            var tf = new TimelineForm(_ac, PUBLIC_TIMELINE_ROUTE, "Federated Timeline");
+            var tf = new TimelineForm(_ac,
+                PUBLIC_TIMELINE_ROUTE,
+                "Federated Timeline");
+            tf.Show();
+        }
+
+        private void localPublicTumelineMenuItem_Click(object sender, EventArgs e)
+        {
+            var tf = new TimelineForm(_ac,
+                PUBLIC_TIMELINE_ROUTE + "?local=true",
+                "Local Timeline");
             tf.Show();
         }
 

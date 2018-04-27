@@ -38,8 +38,9 @@
             this.refreshMenuItem = new System.Windows.Forms.MenuItem();
             this.sep1 = new System.Windows.Forms.MenuItem();
             this.settingsMenuItem = new System.Windows.Forms.MenuItem();
-            this.statusListView = new PocketToot.TootListView();
             this.showMoreMenuItem = new System.Windows.Forms.MenuItem();
+            this.statusListView = new PocketToot.TootListView();
+            this.localPublicTumelineMenuItem = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -63,6 +64,7 @@
             // 
             // timelineMenu
             // 
+            this.timelineMenu.MenuItems.Add(this.localPublicTumelineMenuItem);
             this.timelineMenu.MenuItems.Add(this.publicTimelineMenuItem);
             this.timelineMenu.MenuItems.Add(this.tagTimelineMenuItem);
             this.timelineMenu.Text = "Change &Timeline";
@@ -91,6 +93,11 @@
             this.settingsMenuItem.Text = "&Settings...";
             this.settingsMenuItem.Click += new System.EventHandler(this.settingsMenuItem_Click);
             // 
+            // showMoreMenuItem
+            // 
+            this.showMoreMenuItem.Text = "Show &More";
+            this.showMoreMenuItem.Click += new System.EventHandler(this.showMoreMenuItem_Click);
+            // 
             // statusListView
             // 
             this.statusListView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -104,10 +111,10 @@
             this.statusListView.View = System.Windows.Forms.View.Details;
             this.statusListView.ItemActivate += new System.EventHandler(this.listView1_ItemActivate);
             // 
-            // showMoreMenuItem
+            // localPublicTumelineMenuItem
             // 
-            this.showMoreMenuItem.Text = "Show &More";
-            this.showMoreMenuItem.Click += new System.EventHandler(this.showMoreMenuItem_Click);
+            this.localPublicTumelineMenuItem.Text = "&Local Timeline";
+            this.localPublicTumelineMenuItem.Click += new System.EventHandler(this.localPublicTumelineMenuItem_Click);
             // 
             // TimelineForm
             // 
@@ -136,6 +143,7 @@
         private System.Windows.Forms.MenuItem tagTimelineMenuItem;
         private TootListView statusListView;
         private System.Windows.Forms.MenuItem showMoreMenuItem;
+        private System.Windows.Forms.MenuItem localPublicTumelineMenuItem;
 
     }
 }
