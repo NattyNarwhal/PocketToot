@@ -28,3 +28,18 @@ Requires Visual Studio 2008 with Smart Devices support, and
 `Newtonsoft.Json.Compact`, the last version of which was 3.5.
 
 Build the solution and correct paths to things, if needed. That's it.
+
+## Usage
+
+You need to acquire a development key; the application doesn't currently
+support fetching OAuth keys. From Mastodon's web UI, go to settings, then
+development, then create new application. Call it PocketToot, then once saved,
+put "Your access token" into the token field of the settings when launching the
+app, and your instance's domain name in hostname. You can hit "test" to ensure
+that both the token is valid and you can connect to the server with your
+device's TLS capabilities.
+
+Once launched, the UI should be fairly self-explanatory. While I try to polish
+it, there are rough edges and uninmplemented features.
+
+Timelines are manually refreshed.
