@@ -246,17 +246,10 @@ namespace PocketToot
             try
             {
                 var toUse = _status.ReblogOrSelf();
-                if (toUse.HasReblogged.HasValue && toUse.HasReblogged.Value)
-                {
-                    var s = _ac.SendUrlencoded(FormatStatusRoute("unreblog"), "POST", null);
-                    JsonUtility.MaybeDeserialize<Types.Status>(s);
-                }
-                else
-                {
-                    var s = _ac.SendUrlencoded(FormatStatusRoute("reblog"), "POST", null);
-                    JsonUtility.MaybeDeserialize<Types.Status>(s);
-                }
-                boostMenuItem.Checked = !boostMenuItem.Checked;
+                var endpoint = toUse.HasReblogged.Coerce() ? "unreblog" : "reblog";
+                var s = _ac.SendUrlencoded(FormatStatusRoute(endpoint), "POST", null);
+                _status = JsonUtility.MaybeDeserialize<Types.Status>(s);
+                boostMenuItem.Checked = _status.ReblogOrSelf().HasReblogged.Coerce();
             }
             catch (Exception ex)
             {
@@ -269,17 +262,10 @@ namespace PocketToot
             try
             {
                 var toUse = _status.ReblogOrSelf();
-                if (toUse.HasFavourited.HasValue && toUse.HasFavourited.Value)
-                {
-                    var s = _ac.SendUrlencoded(FormatStatusRoute("unfavourite"), "POST", null);
-                    JsonUtility.MaybeDeserialize<Types.Status>(s);
-                }
-                else
-                {
-                    var s = _ac.SendUrlencoded(FormatStatusRoute("favourite"), "POST", null);
-                    JsonUtility.MaybeDeserialize<Types.Status>(s);
-                }
-                favMenuItem.Checked = !boostMenuItem.Checked;
+                var endpoint = toUse.HasFavourited.Coerce() ? "unfavourite" : "favourite";
+                var s = _ac.SendUrlencoded(FormatStatusRoute(endpoint), "POST", null);
+                _status = JsonUtility.MaybeDeserialize<Types.Status>(s);
+                favMenuItem.Checked = _status.ReblogOrSelf().HasFavourited.Coerce();
             }
             catch (Exception ex)
             {
