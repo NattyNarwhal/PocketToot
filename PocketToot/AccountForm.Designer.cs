@@ -38,11 +38,13 @@
             this.notesPage = new System.Windows.Forms.TabPage();
             this.bioBox = new System.Windows.Forms.WebBrowser();
             this.statusPage = new System.Windows.Forms.TabPage();
-            this.followersPage = new System.Windows.Forms.TabPage();
-            this.followingPage = new System.Windows.Forms.TabPage();
             this.statusesBox = new PocketToot.TootListView();
+            this.followersPage = new System.Windows.Forms.TabPage();
             this.followersBox = new PocketToot.AccountListView();
+            this.followingPage = new System.Windows.Forms.TabPage();
             this.followingBox = new PocketToot.AccountListView();
+            this.sep1 = new System.Windows.Forms.MenuItem();
+            this.followMenuItem = new System.Windows.Forms.MenuItem();
             this.tabControl1.SuspendLayout();
             this.notesPage.SuspendLayout();
             this.statusPage.SuspendLayout();
@@ -56,6 +58,8 @@
             // 
             // menu
             // 
+            this.menu.MenuItems.Add(this.followMenuItem);
+            this.menu.MenuItems.Add(this.sep1);
             this.menu.MenuItems.Add(this.refreshMenuItem);
             this.menu.MenuItems.Add(this.browserMenuItem);
             this.menu.MenuItems.Add(this.copyLinkMenuItem);
@@ -112,22 +116,6 @@
             this.statusPage.Size = new System.Drawing.Size(232, 242);
             this.statusPage.Text = "Statuses";
             // 
-            // followersPage
-            // 
-            this.followersPage.Controls.Add(this.followersBox);
-            this.followersPage.Location = new System.Drawing.Point(0, 0);
-            this.followersPage.Name = "followersPage";
-            this.followersPage.Size = new System.Drawing.Size(240, 245);
-            this.followersPage.Text = "Followers";
-            // 
-            // followingPage
-            // 
-            this.followingPage.Controls.Add(this.followingBox);
-            this.followingPage.Location = new System.Drawing.Point(0, 0);
-            this.followingPage.Name = "followingPage";
-            this.followingPage.Size = new System.Drawing.Size(240, 245);
-            this.followingPage.Text = "Following";
-            // 
             // statusesBox
             // 
             this.statusesBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -141,6 +129,14 @@
             this.statusesBox.View = System.Windows.Forms.View.Details;
             this.statusesBox.ItemActivate += new System.EventHandler(this.statusesBox_ItemActivate);
             // 
+            // followersPage
+            // 
+            this.followersPage.Controls.Add(this.followersBox);
+            this.followersPage.Location = new System.Drawing.Point(0, 0);
+            this.followersPage.Name = "followersPage";
+            this.followersPage.Size = new System.Drawing.Size(232, 242);
+            this.followersPage.Text = "Followers";
+            // 
             // followersBox
             // 
             this.followersBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -149,10 +145,18 @@
             this.followersBox.ItemWidth = 60;
             this.followersBox.Location = new System.Drawing.Point(0, 0);
             this.followersBox.Name = "followersBox";
-            this.followersBox.Size = new System.Drawing.Size(240, 245);
+            this.followersBox.Size = new System.Drawing.Size(232, 242);
             this.followersBox.TabIndex = 0;
             this.followersBox.View = System.Windows.Forms.View.Details;
             this.followersBox.ItemActivate += new System.EventHandler(this.followersBox_ItemActivate);
+            // 
+            // followingPage
+            // 
+            this.followingPage.Controls.Add(this.followingBox);
+            this.followingPage.Location = new System.Drawing.Point(0, 0);
+            this.followingPage.Name = "followingPage";
+            this.followingPage.Size = new System.Drawing.Size(232, 242);
+            this.followingPage.Text = "Following";
             // 
             // followingBox
             // 
@@ -162,10 +166,19 @@
             this.followingBox.ItemWidth = 60;
             this.followingBox.Location = new System.Drawing.Point(0, 0);
             this.followingBox.Name = "followingBox";
-            this.followingBox.Size = new System.Drawing.Size(240, 245);
+            this.followingBox.Size = new System.Drawing.Size(232, 242);
             this.followingBox.TabIndex = 0;
             this.followingBox.View = System.Windows.Forms.View.Details;
             this.followingBox.ItemActivate += new System.EventHandler(this.followingBox_ItemActivate);
+            // 
+            // sep1
+            // 
+            this.sep1.Text = "-";
+            // 
+            // followMenuItem
+            // 
+            this.followMenuItem.Text = "&Follow";
+            this.followMenuItem.Click += new System.EventHandler(this.followMenuItem_Click);
             // 
             // AccountForm
             // 
@@ -201,5 +214,7 @@
         private System.Windows.Forms.MenuItem copyLinkMenuItem;
         private AccountListView followersBox;
         private AccountListView followingBox;
+        private System.Windows.Forms.MenuItem followMenuItem;
+        private System.Windows.Forms.MenuItem sep1;
     }
 }
