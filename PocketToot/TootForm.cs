@@ -219,9 +219,7 @@ namespace PocketToot
                 else if (match is Types.Tag)
                 {
                     var tag = (Types.Tag)match;
-                    var tf = new TimelineForm(_ac, 
-                        TimelineForm.TAG_TIMELINE_ROUTE_PREFIX + tag.Name,
-                        tag.ToString());
+                    var tf = new TimelineForm(_ac, tag.ToString(), TimelineForm.TAG_TIMELINE_ROUTE_PREFIX + tag.Name);
                     tf.Show();
                 }
                 // TODO: AccountForm

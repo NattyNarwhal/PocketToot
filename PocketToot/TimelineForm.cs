@@ -15,13 +15,14 @@ namespace PocketToot
     {
         ApiClient _ac;
         string _timelineRoute;
+        QueryString _baseQs;
 
         // TODO: move these and others
         const string HOME_TIMELINE_ROUTE = "/api/v1/timelines/home";
         const string PUBLIC_TIMELINE_ROUTE = "/api/v1/timelines/public";
         public const string TAG_TIMELINE_ROUTE_PREFIX = "/api/v1/timelines/tag/";
 
-        // init for designer/app launch
+        // init for designer/app launch (special because of special init)
         public TimelineForm()
         {
             InitializeComponent();
@@ -30,18 +31,25 @@ namespace PocketToot
             var token = Settings.GetSetting("InstanceToken", "");
 
             _ac = new ApiClient(hostname, token);
+            _baseQs = new QueryString();
 
             SetTimeline(HOME_TIMELINE_ROUTE, "Home Timeline");
         }
 
         // init for tag/other timelines
-        public TimelineForm(ApiClient client, string route, string title)
+        public TimelineForm(ApiClient client, string title, string route, QueryString qs)
         {
             InitializeComponent();
 
             _ac = client;
+            _baseQs = qs;
 
             SetTimeline(route, title);
+        }
+
+        public TimelineForm(ApiClient client, string title, string route)
+            : this(client, title, route, new QueryString())
+        {
         }
 
         // TODO: we should keep track of open windows to avoid getting a nest
@@ -86,9 +94,25 @@ namespace PocketToot
             }
         }
 
+        string MakeRouteUrl()
+        {
+            return string.Format("{0}?{1}", _timelineRoute, _baseQs.ToQueryString());
+        }
+
+        string MakeRouteUrl(QueryString toAppend)
+        {
+            var qs = new StringBuilder(_baseQs.ToQueryString());
+            if (toAppend != null)
+            {
+                qs.Append("&");
+                qs.Append(toAppend.ToQueryString());
+            }
+            return string.Format("{0}?{1}", _timelineRoute, qs);
+        }
+
         public void RefreshTimeline()
         {
-            RefreshTimeline(_timelineRoute, true, false);
+            RefreshTimeline(MakeRouteUrl(), true, false);
         }
 
         public void RefreshTimeline(string route, bool clear, bool insertAbove)
@@ -130,14 +154,14 @@ namespace PocketToot
         {
             if (statusListView.Items.Count == 0)
             {
-                Refresh();
+                RefreshTimeline();
                 return;
             }
 
             var qs = new QueryString();
             qs.Add("max_id", statusListView.Items.Last().Id.ToString());
 
-            var routeWithQs = string.Format("{0}?{1}", _timelineRoute, qs.ToQueryString());
+            var routeWithQs = string.Format(MakeRouteUrl(qs));
             RefreshTimeline(routeWithQs, false, false);
         }
 
@@ -146,14 +170,14 @@ namespace PocketToot
             // this menu item now just pulls in new and doesnt replace
             if (statusListView.Items.Count == 0)
             {
-                Refresh();
+                RefreshTimeline();
                 return;
             }
 
             var qs = new QueryString();
             qs.Add("since_id", statusListView.Items.First().Id.ToString());
 
-            var routeWithQs = string.Format("{0}?{1}", _timelineRoute, qs.ToQueryString());
+            var routeWithQs = string.Format(MakeRouteUrl(qs));
             RefreshTimeline(routeWithQs, false, true);
         }
 
@@ -184,17 +208,16 @@ namespace PocketToot
 
         private void publicTimelineMenuItem_Click(object sender, EventArgs e)
         {
-            var tf = new TimelineForm(_ac,
-                PUBLIC_TIMELINE_ROUTE,
-                "Federated Timeline");
+            var tf = new TimelineForm(_ac, "Federated Timeline", PUBLIC_TIMELINE_ROUTE);
             tf.Show();
         }
 
         private void localPublicTumelineMenuItem_Click(object sender, EventArgs e)
         {
-            var tf = new TimelineForm(_ac,
-                PUBLIC_TIMELINE_ROUTE + "?local=true",
-                "Local Timeline");
+            var qs = new QueryString();
+            qs.Add("local", "true");
+
+            var tf = new TimelineForm(_ac, "Local Timeline", PUBLIC_TIMELINE_ROUTE, qs);
             tf.Show();
         }
 
@@ -211,7 +234,7 @@ namespace PocketToot
                 var tagRoute = string.Format("{0}{1}",
                     TAG_TIMELINE_ROUTE_PREFIX,
                     QueryString.EscapeUriDataStringRfc3986(tag));
-                var tf = new TimelineForm(_ac, tagRoute, "#" + tag);
+                var tf = new TimelineForm(_ac, "#" + tag, tagRoute);
                 tf.Show();
             }
         }
