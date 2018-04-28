@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{B900F1C2-3D47-4FEC-85B3-04AAF18C3634}") = "PocketToot.Deploy", "PocketToot.Deploy\PocketToot.Deploy.vddproj", "{D7B23740-997D-4C02-B1F3-B6DB97DB078F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,8 @@ Global
 		{A20F504D-7173-4954-8E6A-709A46E44DAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A20F504D-7173-4954-8E6A-709A46E44DAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A20F504D-7173-4954-8E6A-709A46E44DAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7B23740-997D-4C02-B1F3-B6DB97DB078F}.Debug|Any CPU.ActiveCfg = Debug
+		{D7B23740-997D-4C02-B1F3-B6DB97DB078F}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
