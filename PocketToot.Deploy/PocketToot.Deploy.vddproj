@@ -453,7 +453,7 @@
             "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_6005CAF9A8211EA4590A181A16B20B46"
             {
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:PocketToot.Core, Version=1.0.6691.37107, Culture=neutral"
+            "AssemblyAsmDisplayName" = "8:PocketToot.Core, Version=1.0.6692.32635, Culture=neutral"
                 "ScatterAssemblies"
                 {
                     "_6005CAF9A8211EA4590A181A16B20B46"
@@ -705,6 +705,15 @@
         }
         "Folder"
         {
+            "{F6DFDB62-1DD1-498B-89B7-27BAC542EE5A}:_2D6A3BBFD16E419A83202E12C37DA784"
+            {
+            "Name" = "8:#1919"
+            "Condition" = "8:"
+            "Property" = "8:%CE17%"
+                "Folders"
+                {
+                }
+            }
             "{D5B00AC1-E6C3-4CC5-90FF-8E0F53D9E5E0}:_7CDF8003A93F489F8DEA85CEFC811537"
             {
             "DefaultLocation" = "8:%InstallDir%"
@@ -800,6 +809,16 @@
         }
         "Shortcut"
         {
+            "{971D45E9-E38C-49AC-B36E-4C5BEA533350}:_C71C341B9A244127834C5B84C318DFB7"
+            {
+            "Name" = "8:PocketToot"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "Target" = "8:_66142E906F1D4C878CA7329DE21247B3"
+            "Folder" = "8:_2D6A3BBFD16E419A83202E12C37DA784"
+            "WorkingFolder" = "8:_7CDF8003A93F489F8DEA85CEFC811537"
+            }
         }
     }
 }
