@@ -139,7 +139,10 @@ namespace PocketToot
             keyHeader.Width = -1;
             valueHeader.Width = -1;
 
-            webBrowser1.DocumentText = toUse.Content;
+            // include emojis and cap their size (otherwise they render full
+            // size and we definitely are NOT hidpi
+            var content = HtmlUtility.StatusContentsRenderingEmoji(toUse, 16);
+            webBrowser1.DocumentText = content;
         }
 
         void AddMeta(string n, object v)
