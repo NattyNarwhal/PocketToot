@@ -52,7 +52,7 @@ namespace PocketToot
             var parsedRoute = MakeUri(route);
             var wr = WebRequest.Create(parsedRoute);
 
-            wr.Method = "POST";
+            wr.Method = method ?? "POST";
             wr.Headers.Add("Authorization",
                 string.Format("Bearer {0}", Token));
 

@@ -319,8 +319,7 @@ namespace PocketToot
             try
             {
                 var toUse = _status.ReblogOrSelf(); 
-                var s = _ac.SendUrlencoded(FormatStatusRoute(), "DELETE", null); // XXX: HTTP 422
-                var res = JsonUtility.MaybeDeserialize<object>(s);
+                var s = _ac.SendUrlencoded(FormatStatusRoute(), "DELETE", null);
                 Close();
             }
             catch (Exception ex)
