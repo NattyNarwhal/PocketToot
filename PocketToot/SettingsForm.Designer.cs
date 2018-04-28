@@ -32,14 +32,18 @@
             this.mainMenu1 = new System.Windows.Forms.MainMenu();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.instancePage = new System.Windows.Forms.TabPage();
+            this.verifyButton = new System.Windows.Forms.Button();
             this.tokenBox = new System.Windows.Forms.TextBox();
             this.tokenLabel = new System.Windows.Forms.Label();
             this.hostnameBox = new System.Windows.Forms.TextBox();
             this.hostnameLabel = new System.Windows.Forms.Label();
             this.aboutPage = new System.Windows.Forms.TabPage();
-            this.verifyButton = new System.Windows.Forms.Button();
+            this.appNameLabel = new System.Windows.Forms.Label();
+            this.appAuthorLabel = new System.Windows.Forms.LinkLabel();
+            this.licenseBox = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.instancePage.SuspendLayout();
+            this.aboutPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -64,6 +68,17 @@
             this.instancePage.Name = "instancePage";
             this.instancePage.Size = new System.Drawing.Size(240, 245);
             this.instancePage.Text = "Instance";
+            // 
+            // verifyButton
+            // 
+            this.verifyButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.verifyButton.Location = new System.Drawing.Point(3, 101);
+            this.verifyButton.Name = "verifyButton";
+            this.verifyButton.Size = new System.Drawing.Size(230, 20);
+            this.verifyButton.TabIndex = 6;
+            this.verifyButton.Text = "Test Settings";
+            this.verifyButton.Click += new System.EventHandler(this.verifyButton_Click);
             // 
             // tokenBox
             // 
@@ -103,21 +118,49 @@
             // 
             // aboutPage
             // 
+            this.aboutPage.Controls.Add(this.licenseBox);
+            this.aboutPage.Controls.Add(this.appAuthorLabel);
+            this.aboutPage.Controls.Add(this.appNameLabel);
             this.aboutPage.Location = new System.Drawing.Point(0, 0);
             this.aboutPage.Name = "aboutPage";
-            this.aboutPage.Size = new System.Drawing.Size(232, 242);
+            this.aboutPage.Size = new System.Drawing.Size(240, 245);
             this.aboutPage.Text = "About";
             // 
-            // verifyButton
+            // appNameLabel
             // 
-            this.verifyButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.appNameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.verifyButton.Location = new System.Drawing.Point(3, 101);
-            this.verifyButton.Name = "verifyButton";
-            this.verifyButton.Size = new System.Drawing.Size(230, 20);
-            this.verifyButton.TabIndex = 6;
-            this.verifyButton.Text = "Test Settings";
-            this.verifyButton.Click += new System.EventHandler(this.verifyButton_Click);
+            this.appNameLabel.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular);
+            this.appNameLabel.Location = new System.Drawing.Point(7, 4);
+            this.appNameLabel.Name = "appNameLabel";
+            this.appNameLabel.Size = new System.Drawing.Size(226, 20);
+            this.appNameLabel.Text = "PocketToot";
+            // 
+            // appAuthorLabel
+            // 
+            this.appAuthorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.appAuthorLabel.Location = new System.Drawing.Point(7, 24);
+            this.appAuthorLabel.Name = "appAuthorLabel";
+            this.appAuthorLabel.Size = new System.Drawing.Size(226, 20);
+            this.appAuthorLabel.TabIndex = 1;
+            this.appAuthorLabel.Text = "by @calvin@cronk.stenoweb.net";
+            this.appAuthorLabel.Click += new System.EventHandler(this.appAuthorLabel_Click);
+            // 
+            // licenseBox
+            // 
+            this.licenseBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.licenseBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.licenseBox.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular);
+            this.licenseBox.Location = new System.Drawing.Point(0, 42);
+            this.licenseBox.Multiline = true;
+            this.licenseBox.Name = "licenseBox";
+            this.licenseBox.ReadOnly = true;
+            this.licenseBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.licenseBox.Size = new System.Drawing.Size(240, 203);
+            this.licenseBox.TabIndex = 2;
             // 
             // SettingsForm
             // 
@@ -132,6 +175,7 @@
             this.Closing += new System.ComponentModel.CancelEventHandler(this.SettingsForm_Closing);
             this.tabControl1.ResumeLayout(false);
             this.instancePage.ResumeLayout(false);
+            this.aboutPage.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -146,5 +190,8 @@
         private System.Windows.Forms.TextBox hostnameBox;
         private System.Windows.Forms.Label hostnameLabel;
         private System.Windows.Forms.Button verifyButton;
+        private System.Windows.Forms.LinkLabel appAuthorLabel;
+        private System.Windows.Forms.Label appNameLabel;
+        private System.Windows.Forms.TextBox licenseBox;
     }
 }

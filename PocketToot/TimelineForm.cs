@@ -188,6 +188,25 @@ namespace PocketToot
             // load new settings
             _ac.Hostname = Settings.GetSetting("InstanceHostname", "");
             _ac.Token = Settings.GetSetting("InstanceToken", "");
+            // we needed something to disambiguate with
+            if (sf.DialogResult == DialogResult.Ignore)
+            {
+                try
+                {
+                    var authorRoute = "/api/v1/accounts/search?q=calvin%40cronk.stenoweb.net";
+                    var authorJson = _ac.Get(authorRoute);
+                    var author = JsonUtility.MaybeDeserialize<List<Types.Account>>(authorJson).FirstOrDefault();
+                    if (author != null)
+                    {
+                        var af = new AccountForm(_ac, author);
+                        af.Show();
+                    }
+                }
+                catch (Exception e)
+                {
+                    ErrorDispatcher.ShowError(e, "Showing Author");
+                }
+            }
         }
 
         private void settingsMenuItem_Click(object sender, EventArgs e)

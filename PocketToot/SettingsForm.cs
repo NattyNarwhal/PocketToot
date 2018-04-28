@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace PocketToot
 {
@@ -19,6 +20,11 @@ namespace PocketToot
         public SettingsForm()
         {
             InitializeComponent();
+            
+            var assembly = Assembly.GetExecutingAssembly();
+            appNameLabel.Text = string.Format("PocketToot {0}", assembly.GetName().Version);
+            licenseBox.Text = Properties.Resources.License;
+
             hostnameBox.Text = Settings.GetSetting("InstanceHostname", "");
             tokenBox.Text = Settings.GetSetting("InstanceToken", "");
         }
@@ -48,6 +54,12 @@ namespace PocketToot
         {
             Settings.SetSetting("InstanceHostname", hostnameBox.Text);
             Settings.SetSetting("InstanceToken", tokenBox.Text);
+        }
+
+        private void appAuthorLabel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Ignore; // something unique
+            Close();
         }
     }
 }
