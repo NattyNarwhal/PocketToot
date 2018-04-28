@@ -87,7 +87,9 @@ namespace PocketToot
 
             favMenuItem.Checked = toUse.HasFavourited.Coerce();
             boostMenuItem.Checked = toUse.HasReblogged.Coerce();
-            // XXX: reblog or self?
+            // we can't boost these kinds of status
+            boostMenuItem.Enabled = toUse.Visibility != "direct" && toUse.Visibility != "private";
+            // XXX: reblog or self? also conditions for pin and delete...
             pinMenuItem.Checked = toUse.Pinned.Coerce();
 
             foreach (var mention in toUse.Mentions)
