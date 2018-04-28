@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A20F504D-7173-4954-8E6A-709A46E44DAF}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -69,6 +69,7 @@
     <Compile Include="Types\Application.cs" />
     <Compile Include="Types\Attachment.cs" />
     <Compile Include="Types\Context.cs" />
+    <Compile Include="Types\Emoji.cs" />
     <Compile Include="Types\Error.cs" />
     <Compile Include="Types\Mention.cs" />
     <Compile Include="Types\Status.cs" />

@@ -143,6 +143,9 @@ namespace PocketToot.Types
         [JsonProperty("media_attachments")]
         public List<Attachment> Attachments { get; set; }
 
+        [JsonProperty("emojis")]
+        public List<Emoji> Emoji { get; set; }
+
         [JsonProperty("mentions")]
         public List<Mention> Mentions { get; set; }
 
