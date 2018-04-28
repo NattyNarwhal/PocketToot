@@ -42,10 +42,12 @@
             this.followingPage = new System.Windows.Forms.TabPage();
             this.sep1 = new System.Windows.Forms.MenuItem();
             this.followMenuItem = new System.Windows.Forms.MenuItem();
+            this.composeMenuItem = new System.Windows.Forms.MenuItem();
             this.statusesBox = new PocketToot.TootListView();
             this.followersBox = new PocketToot.AccountListView();
             this.followingBox = new PocketToot.AccountListView();
-            this.composeMenuItem = new System.Windows.Forms.MenuItem();
+            this.blockMenuItem = new System.Windows.Forms.MenuItem();
+            this.muteMenuItem = new System.Windows.Forms.MenuItem();
             this.tabControl1.SuspendLayout();
             this.notesPage.SuspendLayout();
             this.statusPage.SuspendLayout();
@@ -61,6 +63,8 @@
             // menu
             // 
             this.menu.MenuItems.Add(this.followMenuItem);
+            this.menu.MenuItems.Add(this.muteMenuItem);
+            this.menu.MenuItems.Add(this.blockMenuItem);
             this.menu.MenuItems.Add(this.sep1);
             this.menu.MenuItems.Add(this.refreshMenuItem);
             this.menu.MenuItems.Add(this.browserMenuItem);
@@ -143,6 +147,11 @@
             this.followMenuItem.Text = "&Follow";
             this.followMenuItem.Click += new System.EventHandler(this.followMenuItem_Click);
             // 
+            // composeMenuItem
+            // 
+            this.composeMenuItem.Text = "&Compose";
+            this.composeMenuItem.Click += new System.EventHandler(this.composeMenuItem_Click);
+            // 
             // statusesBox
             // 
             this.statusesBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -182,10 +191,15 @@
             this.followingBox.View = System.Windows.Forms.View.Details;
             this.followingBox.ItemActivate += new System.EventHandler(this.followingBox_ItemActivate);
             // 
-            // composeMenuItem
+            // blockMenuItem
             // 
-            this.composeMenuItem.Text = "&Compose";
-            this.composeMenuItem.Click += new System.EventHandler(this.composeMenuItem_Click);
+            this.blockMenuItem.Text = "&Block";
+            this.blockMenuItem.Click += new System.EventHandler(this.blockMenuItem_Click);
+            // 
+            // muteMenuItem
+            // 
+            this.muteMenuItem.Text = "&Mute";
+            this.muteMenuItem.Click += new System.EventHandler(this.muteMenuItem_Click);
             // 
             // AccountForm
             // 
@@ -224,5 +238,7 @@
         private System.Windows.Forms.MenuItem followMenuItem;
         private System.Windows.Forms.MenuItem sep1;
         private System.Windows.Forms.MenuItem composeMenuItem;
+        private System.Windows.Forms.MenuItem muteMenuItem;
+        private System.Windows.Forms.MenuItem blockMenuItem;
     }
 }

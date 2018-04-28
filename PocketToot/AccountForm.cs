@@ -191,5 +191,56 @@ namespace PocketToot
             var cf = new ComposeForm(_ac, template, "", "direct");
             cf.Show();
         }
+
+        private void muteMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var notifMute = false;
+                var qs = new QueryString();
+                // TODO: can mute/notif mute desync?
+                if (_relationship.Muting)
+                {
+                    switch (MessageBox.Show("Do you want to mute notifications from this user as well?",
+                        "Muting",
+                        MessageBoxButtons.YesNoCancel,
+                        MessageBoxIcon.Question,
+                        MessageBoxDefaultButton.Button1))
+                    {
+                        case DialogResult.Yes:
+                            notifMute = true;
+                            break;
+                        case DialogResult.No:
+                            break;
+                        default: // incl cancel
+                            return;
+                    }
+                }
+                qs.Add("notifications", notifMute.ToString();
+                var endpoint = _relationship.Muting ? "unmute" : "mute";
+                var s = _ac.SendUrlencoded(FormatAccountByIdRoute(endpoint), "POST", qs);
+                _relationship = JsonUtility.MaybeDeserialize<Types.Relationship>(s);
+                muteMenuItem.Checked = _relationship.Muting;
+            }
+            catch (Exception ex)
+            {
+                ErrorDispatcher.ShowError(ex, "Muting");
+            }
+        }
+
+        private void blockMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var endpoint = _relationship.Blocking ? "unblock" : "block";
+                var s = _ac.SendUrlencoded(FormatAccountByIdRoute(endpoint), "POST", null);
+                _relationship = JsonUtility.MaybeDeserialize<Types.Relationship>(s);
+                blockMenuItem.Checked = _relationship.Blocking;
+            }
+            catch (Exception ex)
+            {
+                ErrorDispatcher.ShowError(ex, "Blocking");
+            }
+        }
     }
 }
