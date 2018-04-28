@@ -1,5 +1,7 @@
 # PocketToot
 
+![Federated timeline](https://i.imgur.com/yvZ3Hqe.png) ![Status view](https://i.imgur.com/jDEmxv7.png)
+
 A Mastodon API client (tested with Mastodon v2.3.3; untested with Pleroma but
 likely to work) for Pocket PCs 5.0 or newer. (It could work with 2003, but the
 TLS library situation is too bad for me to justify targetting it.)
@@ -13,6 +15,10 @@ connecting when the certificate store is out of date, but no SNI means you have
 no virtual hosts, effectively. Keep this in mind. If your instance admin is
 unwilling to change settings for the sake of this (I wouldn't blame them) then
 you have other options like a proxy or setting up your own instance.
+
+Smartphone SDK is possible, but needs a new UI for certain, probably library
+rework to handle the subset of a subset that is a Smartphone Compact Framework.
+Sorry Q/Blackjack owners.
 
 If you're crazy as me, feel free to submit a PR/file issues!
 
