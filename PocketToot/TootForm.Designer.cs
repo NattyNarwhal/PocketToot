@@ -48,6 +48,8 @@
             this.threadBox = new PocketToot.TootListView();
             this.attachmentsPage = new System.Windows.Forms.TabPage();
             this.attachmentsBox = new PocketToot.AttachmentListView();
+            this.pinMenuItem = new System.Windows.Forms.MenuItem();
+            this.deleteMenuItem = new System.Windows.Forms.MenuItem();
             this.tabControl1.SuspendLayout();
             this.contentsTab.SuspendLayout();
             this.threadPage.SuspendLayout();
@@ -68,6 +70,8 @@
             // 
             this.menu.MenuItems.Add(this.boostMenuItem);
             this.menu.MenuItems.Add(this.favMenuItem);
+            this.menu.MenuItems.Add(this.pinMenuItem);
+            this.menu.MenuItems.Add(this.deleteMenuItem);
             this.menu.MenuItems.Add(this.sep1);
             this.menu.MenuItems.Add(this.refreshMenuItem);
             this.menu.MenuItems.Add(this.browserMenuItem);
@@ -190,7 +194,7 @@
             this.attachmentsPage.Controls.Add(this.attachmentsBox);
             this.attachmentsPage.Location = new System.Drawing.Point(0, 0);
             this.attachmentsPage.Name = "attachmentsPage";
-            this.attachmentsPage.Size = new System.Drawing.Size(240, 245);
+            this.attachmentsPage.Size = new System.Drawing.Size(232, 242);
             this.attachmentsPage.Text = "Attached";
             // 
             // attachmentsBox
@@ -201,10 +205,20 @@
             this.attachmentsBox.ItemWidth = 60;
             this.attachmentsBox.Location = new System.Drawing.Point(0, 0);
             this.attachmentsBox.Name = "attachmentsBox";
-            this.attachmentsBox.Size = new System.Drawing.Size(240, 245);
+            this.attachmentsBox.Size = new System.Drawing.Size(232, 242);
             this.attachmentsBox.TabIndex = 0;
             this.attachmentsBox.View = System.Windows.Forms.View.Details;
             this.attachmentsBox.ItemActivate += new System.EventHandler(this.attachmentsBox_ItemActivate);
+            // 
+            // pinMenuItem
+            // 
+            this.pinMenuItem.Text = "&Pin";
+            this.pinMenuItem.Click += new System.EventHandler(this.pinMenuItem_Click);
+            // 
+            // deleteMenuItem
+            // 
+            this.deleteMenuItem.Text = "&Delete";
+            this.deleteMenuItem.Click += new System.EventHandler(this.deleteMenuItem_Click);
             // 
             // TootForm
             // 
@@ -246,6 +260,8 @@
         private TootListView threadBox;
         private System.Windows.Forms.MenuItem refreshMenuItem;
         private AttachmentListView attachmentsBox;
+        private System.Windows.Forms.MenuItem pinMenuItem;
+        private System.Windows.Forms.MenuItem deleteMenuItem;
 
 
     }

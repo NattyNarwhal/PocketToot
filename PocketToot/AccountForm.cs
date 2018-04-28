@@ -216,7 +216,7 @@ namespace PocketToot
                             return;
                     }
                 }
-                qs.Add("notifications", notifMute.ToString();
+                qs.Add("notifications", notifMute.ToString());
                 var endpoint = _relationship.Muting ? "unmute" : "mute";
                 var s = _ac.SendUrlencoded(FormatAccountByIdRoute(endpoint), "POST", qs);
                 _relationship = JsonUtility.MaybeDeserialize<Types.Relationship>(s);

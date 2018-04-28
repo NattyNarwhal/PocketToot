@@ -46,7 +46,7 @@ namespace PocketToot
             // try to fetch refreshed status or fall back on given param
             try
             {
-                var newStatusJson = _ac.Get(string.Format("/api/v1/statuses/{0}", _status.Id));
+                var newStatusJson = _ac.Get(FormatStatusRoute());
                 var newStatus = JsonUtility.MaybeDeserialize<Types.Status>(newStatusJson);
                 _status = newStatus;
             }
@@ -85,8 +85,10 @@ namespace PocketToot
             if (!string.IsNullOrEmpty(toUse.Language))
                 AddMeta("Language", toUse.Language);
 
-            favMenuItem.Checked = toUse.HasFavourited.HasValue ? toUse.HasFavourited.Value : false;
-            boostMenuItem.Checked = toUse.HasReblogged.HasValue ? toUse.HasReblogged.Value : false;
+            favMenuItem.Checked = toUse.HasFavourited.Coerce();
+            boostMenuItem.Checked = toUse.HasReblogged.Coerce();
+            // XXX: reblog or self?
+            pinMenuItem.Checked = toUse.Pinned.Coerce();
 
             foreach (var mention in toUse.Mentions)
             {
@@ -157,6 +159,11 @@ namespace PocketToot
             lvi.Text = n;
             lvi.SubItems.Add(vso);
             metaListView.Items.Add(lvi);
+        }
+
+        string FormatStatusRoute()
+        {
+            return string.Format("/api/v1/statuses/{0}", _status.Id);
         }
 
         string FormatStatusRoute(string statusEndpoint)
@@ -286,6 +293,37 @@ namespace PocketToot
             {
                 var tf = new TootForm(_ac, status);
                 tf.Show();
+            }
+        }
+
+        private void pinMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var toUse = _status.ReblogOrSelf();
+                var endpoint = toUse.Pinned.Coerce() ? "unpin" : "pin";
+                var s = _ac.SendUrlencoded(FormatStatusRoute(endpoint), "POST", null);
+                _status = JsonUtility.MaybeDeserialize<Types.Status>(s);
+                pinMenuItem.Checked = _status.ReblogOrSelf().Pinned.Coerce();
+            }
+            catch (Exception ex)
+            {
+                ErrorDispatcher.ShowError(ex, "Pinning");
+            }
+        }
+
+        private void deleteMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var toUse = _status.ReblogOrSelf(); 
+                var s = _ac.SendUrlencoded(FormatStatusRoute(), "DELETE", null); // XXX: HTTP 422
+                var res = JsonUtility.MaybeDeserialize<object>(s);
+                Close();
+            }
+            catch (Exception ex)
+            {
+                ErrorDispatcher.ShowError(ex, "Deleting");
             }
         }
     }
