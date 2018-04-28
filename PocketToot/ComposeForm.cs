@@ -61,6 +61,18 @@ namespace PocketToot
             cwBox.Text = actual.ContentWarning;
         }
 
+        public ComposeForm(ApiClient ac, string template, string cw, string privacy)
+            : this(ac)
+        {
+            Text = "Compose Reply";
+
+            Visibility = privacy;
+            contentBox.Text = template ?? "";
+            cwBox.Text = cw ?? "";
+
+            contentBox.SelectionStart = contentBox.Text.Length;
+        }
+
         QueryString ToQueryString()
         {
             var qs = new QueryString();

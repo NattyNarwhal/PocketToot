@@ -184,5 +184,12 @@ namespace PocketToot
                 ErrorDispatcher.ShowError(ex, "Following");
             }
         }
+
+        private void composeMenuItem_Click(object sender, EventArgs e)
+        {
+            var template = string.Format("@{0} ", _account.AccountId);
+            var cf = new ComposeForm(_ac, template, "", "direct");
+            cf.Show();
+        }
     }
 }
