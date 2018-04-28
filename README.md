@@ -31,6 +31,10 @@ Build the solution and correct paths to things, if needed. That's it.
 
 ## Usage
 
+To install, just sync the CAB file over and install. You will need .NET Compact
+Framework version 3.5; the latest version of which I provide for Windows Mobile
+2005 devices [here](https://cmpct.info/%7Ecalvin/PocketToot/KB970549/NETCFv35.wm.armv4i.cab).
+
 You need to acquire a development key; the application doesn't currently
 support fetching OAuth keys. From Mastodon's web UI, go to settings, then
 development, then create new application. Call it PocketToot, then once saved,
