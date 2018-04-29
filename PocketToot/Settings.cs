@@ -16,6 +16,8 @@ namespace PocketToot
             _settings = new Dictionary<string, string>();
         }
 
+        // TODO: generic versions that can properly convert on the fly
+
         public static string GetSetting(string name, string fallback)
         {
             if (_settings.ContainsKey(name))

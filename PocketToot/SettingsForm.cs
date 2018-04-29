@@ -27,6 +27,8 @@ namespace PocketToot
 
             hostnameBox.Text = Settings.GetSetting("InstanceHostname", "");
             tokenBox.Text = Settings.GetSetting("InstanceToken", "");
+
+            emojiBox.Checked = bool.Parse(Settings.GetSetting("RenderEmoji", "true"));
         }
 
         public SettingsForm(ApiClient client)
@@ -54,6 +56,7 @@ namespace PocketToot
         {
             Settings.SetSetting("InstanceHostname", hostnameBox.Text);
             Settings.SetSetting("InstanceToken", tokenBox.Text);
+            Settings.SetSetting("RenderEmoji", emojiBox.Checked.ToString());
         }
 
         private void appAuthorLabel_Click(object sender, EventArgs e)

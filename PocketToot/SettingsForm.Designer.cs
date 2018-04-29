@@ -38,17 +38,21 @@
             this.hostnameBox = new System.Windows.Forms.TextBox();
             this.hostnameLabel = new System.Windows.Forms.Label();
             this.aboutPage = new System.Windows.Forms.TabPage();
-            this.appNameLabel = new System.Windows.Forms.Label();
-            this.appAuthorLabel = new System.Windows.Forms.LinkLabel();
             this.licenseBox = new System.Windows.Forms.TextBox();
+            this.appAuthorLabel = new System.Windows.Forms.LinkLabel();
+            this.appNameLabel = new System.Windows.Forms.Label();
+            this.displayPage = new System.Windows.Forms.TabPage();
+            this.emojiBox = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.instancePage.SuspendLayout();
             this.aboutPage.SuspendLayout();
+            this.displayPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.instancePage);
+            this.tabControl1.Controls.Add(this.displayPage);
             this.tabControl1.Controls.Add(this.aboutPage);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
@@ -123,29 +127,8 @@
             this.aboutPage.Controls.Add(this.appNameLabel);
             this.aboutPage.Location = new System.Drawing.Point(0, 0);
             this.aboutPage.Name = "aboutPage";
-            this.aboutPage.Size = new System.Drawing.Size(240, 245);
+            this.aboutPage.Size = new System.Drawing.Size(232, 242);
             this.aboutPage.Text = "About";
-            // 
-            // appNameLabel
-            // 
-            this.appNameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.appNameLabel.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular);
-            this.appNameLabel.Location = new System.Drawing.Point(7, 4);
-            this.appNameLabel.Name = "appNameLabel";
-            this.appNameLabel.Size = new System.Drawing.Size(226, 20);
-            this.appNameLabel.Text = "PocketToot";
-            // 
-            // appAuthorLabel
-            // 
-            this.appAuthorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.appAuthorLabel.Location = new System.Drawing.Point(7, 24);
-            this.appAuthorLabel.Name = "appAuthorLabel";
-            this.appAuthorLabel.Size = new System.Drawing.Size(226, 20);
-            this.appAuthorLabel.TabIndex = 1;
-            this.appAuthorLabel.Text = "by @calvin@cronk.stenoweb.net";
-            this.appAuthorLabel.Click += new System.EventHandler(this.appAuthorLabel_Click);
             // 
             // licenseBox
             // 
@@ -159,8 +142,47 @@
             this.licenseBox.Name = "licenseBox";
             this.licenseBox.ReadOnly = true;
             this.licenseBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.licenseBox.Size = new System.Drawing.Size(240, 203);
+            this.licenseBox.Size = new System.Drawing.Size(232, 200);
             this.licenseBox.TabIndex = 2;
+            // 
+            // appAuthorLabel
+            // 
+            this.appAuthorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.appAuthorLabel.Location = new System.Drawing.Point(7, 24);
+            this.appAuthorLabel.Name = "appAuthorLabel";
+            this.appAuthorLabel.Size = new System.Drawing.Size(218, 20);
+            this.appAuthorLabel.TabIndex = 1;
+            this.appAuthorLabel.Text = "by @calvin@cronk.stenoweb.net";
+            this.appAuthorLabel.Click += new System.EventHandler(this.appAuthorLabel_Click);
+            // 
+            // appNameLabel
+            // 
+            this.appNameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.appNameLabel.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular);
+            this.appNameLabel.Location = new System.Drawing.Point(7, 4);
+            this.appNameLabel.Name = "appNameLabel";
+            this.appNameLabel.Size = new System.Drawing.Size(218, 20);
+            this.appNameLabel.Text = "PocketToot";
+            // 
+            // displayPage
+            // 
+            this.displayPage.Controls.Add(this.emojiBox);
+            this.displayPage.Location = new System.Drawing.Point(0, 0);
+            this.displayPage.Name = "displayPage";
+            this.displayPage.Size = new System.Drawing.Size(240, 245);
+            this.displayPage.Text = "Display";
+            // 
+            // emojiBox
+            // 
+            this.emojiBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.emojiBox.Location = new System.Drawing.Point(7, 7);
+            this.emojiBox.Name = "emojiBox";
+            this.emojiBox.Size = new System.Drawing.Size(226, 20);
+            this.emojiBox.TabIndex = 0;
+            this.emojiBox.Text = "Custom &Emoji";
             // 
             // SettingsForm
             // 
@@ -176,6 +198,7 @@
             this.tabControl1.ResumeLayout(false);
             this.instancePage.ResumeLayout(false);
             this.aboutPage.ResumeLayout(false);
+            this.displayPage.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -193,5 +216,7 @@
         private System.Windows.Forms.LinkLabel appAuthorLabel;
         private System.Windows.Forms.Label appNameLabel;
         private System.Windows.Forms.TextBox licenseBox;
+        private System.Windows.Forms.TabPage displayPage;
+        private System.Windows.Forms.CheckBox emojiBox;
     }
 }

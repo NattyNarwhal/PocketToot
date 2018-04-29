@@ -117,8 +117,6 @@ namespace PocketToot
 
         public void RefreshTimeline(string route, bool clear, bool insertAbove)
         {
-            // TODO: some smart algorithm where we can splice in new statuses
-
             statusListView.BeginUpdate();
 
             try
@@ -185,7 +183,7 @@ namespace PocketToot
         {
             var sf = new SettingsForm(_ac);
             sf.ShowDialog();
-            // load new settings
+            // load new settings directly relevant to us
             _ac.Hostname = Settings.GetSetting("InstanceHostname", "");
             _ac.Token = Settings.GetSetting("InstanceToken", "");
             // we needed something to disambiguate with

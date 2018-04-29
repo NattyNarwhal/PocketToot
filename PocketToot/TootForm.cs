@@ -143,9 +143,16 @@ namespace PocketToot
             keyHeader.Width = -1;
             valueHeader.Width = -1;
 
-            // include emojis and cap their size (otherwise they render full
-            // size and we definitely are NOT hidpi
-            var content = HtmlUtility.StatusContentsRenderingEmoji(toUse, 16);
+            string content;
+            if (bool.Parse(Settings.GetSetting("RenderEmoji", "true")))
+            {
+                // cap size to 16px
+                content = HtmlUtility.StatusContentsRenderingEmoji(toUse, 16);
+            }
+            else
+            {
+                content = toUse.Content;
+            }
             webBrowser1.DocumentText = content;
         }
 
