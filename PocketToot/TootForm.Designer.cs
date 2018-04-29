@@ -33,6 +33,8 @@
             this.menu = new System.Windows.Forms.MenuItem();
             this.boostMenuItem = new System.Windows.Forms.MenuItem();
             this.favMenuItem = new System.Windows.Forms.MenuItem();
+            this.pinMenuItem = new System.Windows.Forms.MenuItem();
+            this.deleteMenuItem = new System.Windows.Forms.MenuItem();
             this.sep1 = new System.Windows.Forms.MenuItem();
             this.refreshMenuItem = new System.Windows.Forms.MenuItem();
             this.browserMenuItem = new System.Windows.Forms.MenuItem();
@@ -48,8 +50,7 @@
             this.threadBox = new PocketToot.TootListView();
             this.attachmentsPage = new System.Windows.Forms.TabPage();
             this.attachmentsBox = new PocketToot.AttachmentListView();
-            this.pinMenuItem = new System.Windows.Forms.MenuItem();
-            this.deleteMenuItem = new System.Windows.Forms.MenuItem();
+            this.muteConvMenuItem = new System.Windows.Forms.MenuItem();
             this.tabControl1.SuspendLayout();
             this.contentsTab.SuspendLayout();
             this.threadPage.SuspendLayout();
@@ -71,6 +72,7 @@
             this.menu.MenuItems.Add(this.boostMenuItem);
             this.menu.MenuItems.Add(this.favMenuItem);
             this.menu.MenuItems.Add(this.pinMenuItem);
+            this.menu.MenuItems.Add(this.muteConvMenuItem);
             this.menu.MenuItems.Add(this.deleteMenuItem);
             this.menu.MenuItems.Add(this.sep1);
             this.menu.MenuItems.Add(this.refreshMenuItem);
@@ -87,6 +89,16 @@
             // 
             this.favMenuItem.Text = "&Favourite";
             this.favMenuItem.Click += new System.EventHandler(this.favMenuItem_Click);
+            // 
+            // pinMenuItem
+            // 
+            this.pinMenuItem.Text = "&Pin";
+            this.pinMenuItem.Click += new System.EventHandler(this.pinMenuItem_Click);
+            // 
+            // deleteMenuItem
+            // 
+            this.deleteMenuItem.Text = "&Delete";
+            this.deleteMenuItem.Click += new System.EventHandler(this.deleteMenuItem_Click);
             // 
             // sep1
             // 
@@ -210,15 +222,10 @@
             this.attachmentsBox.View = System.Windows.Forms.View.Details;
             this.attachmentsBox.ItemActivate += new System.EventHandler(this.attachmentsBox_ItemActivate);
             // 
-            // pinMenuItem
+            // muteConvMenuItem
             // 
-            this.pinMenuItem.Text = "&Pin";
-            this.pinMenuItem.Click += new System.EventHandler(this.pinMenuItem_Click);
-            // 
-            // deleteMenuItem
-            // 
-            this.deleteMenuItem.Text = "&Delete";
-            this.deleteMenuItem.Click += new System.EventHandler(this.deleteMenuItem_Click);
+            this.muteConvMenuItem.Text = "&Mute Conversation";
+            this.muteConvMenuItem.Click += new System.EventHandler(this.muteConvMenuItem_Click);
             // 
             // TootForm
             // 
@@ -262,6 +269,7 @@
         private AttachmentListView attachmentsBox;
         private System.Windows.Forms.MenuItem pinMenuItem;
         private System.Windows.Forms.MenuItem deleteMenuItem;
+        private System.Windows.Forms.MenuItem muteConvMenuItem;
 
 
     }

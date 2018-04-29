@@ -122,6 +122,9 @@ namespace PocketToot.Types
         [JsonProperty("favourited")]
         public bool? HasFavourited { get; set; }
 
+        [JsonProperty("muted")]
+        public bool? Muted { get; set; }
+
         // this is an enum (public, unlisted, private, direct)
         [JsonProperty("visibility")]
         public string Visibility { get; set; }

@@ -334,5 +334,21 @@ namespace PocketToot
                 ErrorDispatcher.ShowError(ex, "Deleting");
             }
         }
+
+        private void muteConvMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var toUse = _status.ReblogOrSelf(); // XXX?
+                var endpoint = toUse.Muted.Coerce() ? "unmute" : "mute";
+                var s = _ac.SendUrlencoded(FormatStatusRoute(endpoint), "POST", null);
+                _status = JsonUtility.MaybeDeserialize<Types.Status>(s);
+                muteConvMenuItem.Checked = _status.ReblogOrSelf().Muted.Coerce();
+            }
+            catch (Exception ex)
+            {
+                ErrorDispatcher.ShowError(ex, "Muting Conversation");
+            }
+        }
     }
 }
