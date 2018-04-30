@@ -194,14 +194,16 @@ namespace PocketToot
             {
                 try
                 {
-                    //var authorRoute = "/api/v1/accounts/search?q=calvin%40cronk.stenoweb.net";
-                    //var authorJson = _ac.Get(authorRoute);
-                    //var author = JsonUtility.MaybeDeserialize<List<Types.Account>>(authorJson).FirstOrDefault();
-                    //if (author != null)
-                    //{
-                    //    var af = new AccountForm(_ac, author);
-                    //    af.Show();
-                    //}
+                    var author = Types.Account
+                        .GetAccounts(_ac, "calvin@cronk.stenoweb.net", false)
+                        // This is because AccountId on cronk doesn't include domain!
+                        .Where(x => x.Url == "https://cronk.stenoweb.net/@calvin")
+                        .SingleOrDefault();
+                    if (author != null)
+                    {
+                        var af = new AccountForm(_ac, author);
+                        af.Show();
+                    }
                 }
                 catch (Exception e)
                 {

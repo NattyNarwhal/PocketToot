@@ -110,6 +110,18 @@ namespace PocketToot.Types
             return JsonUtility.MaybeDeserialize<Account>(uJson);
         }
 
+        public static List<Account> GetAccounts(ApiClient ac, string q, bool followingOnly)
+        {
+            var qs = new QueryString();
+            qs.Add("q", q);
+            if (followingOnly)
+                qs.Add("following", "true");
+
+            var route = string.Format("/api/v1/accounts/search?{0}", qs.ToQueryString());
+            var json = ac.Get(route);
+            return JsonUtility.MaybeDeserialize<List<Account>>(json);
+        }
+
         public static Account GetSelf(ApiClient ac)
         {
             var uJson = ac.Get(VERIFY_CREDENTIALS);
