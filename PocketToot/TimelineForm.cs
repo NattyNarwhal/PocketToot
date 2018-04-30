@@ -64,9 +64,11 @@ namespace PocketToot
                     Text = "Home Timeline";
                     break;
                 case TimelineType.Local:
+                    localPublicTumelineMenuItem.Enabled = false;
                     Text = "Local Timeline";
                     break;
                 case TimelineType.Federated:
+                    publicTimelineMenuItem.Enabled = false;                    
                     Text = "Federated Timeline";
                     break;
                 case TimelineType.Tag:
