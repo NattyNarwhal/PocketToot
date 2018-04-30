@@ -16,6 +16,7 @@ namespace PocketToot
     {
         ApiClient _ac;
         Types.Status _status;
+        Types.Context _context;
 
         public TootForm()
         {
@@ -30,8 +31,7 @@ namespace PocketToot
             _ac = ac;
             _status = status;
 
-            // too expensive atm
-            // UpdateStatusInPlace();
+            UpdateStatusInPlace();
 
             SetForUI(_status);
 
@@ -45,6 +45,7 @@ namespace PocketToot
             try
             {
                 _status = Types.Status.GetById(_ac, _status.Id);
+                _context = _status.GetContext(_ac);
             }
             catch (Exception e)
             {
@@ -112,24 +113,15 @@ namespace PocketToot
             attachmentsPage.Text = string.Format("Attachments ({0})", toUse.Attachments.Count);
 
             // Thread
-            try
+            if (_context != null)
             {
                 threadBox.BeginUpdate();
-
-                var context = _status.GetContext(_ac);
-
-                threadBox.Items.Clear();
-                foreach (var s in context.Ancestors.Concat(context.Descendants))
-                {
+                threadBox.Items.Clear(); // TODO: Splice in
+                foreach (var s in _context.Ancestors)
                     threadBox.Items.Add(s);
-                }
-            }
-            catch (Exception e)
-            {
-                ErrorDispatcher.ShowError(e, "Reconstructing Thread");
-            }
-            finally
-            {
+                threadBox.Items.Add(_status.ReblogOrSelf());
+                foreach (var s in _context.Descendants)
+                    threadBox.Items.Add(s);
                 threadBox.EndUpdate();
                 threadBox.ItemWidth = -1;
                 threadPage.Text = string.Format("Thread ({0})", threadBox.Items.Count);
@@ -271,7 +263,9 @@ namespace PocketToot
         private void threadBox_ItemActivate(object sender, EventArgs e)
         {
             var status = threadBox.SelectedItems.FirstOrDefault();
-            if (status != null)
+            if (status != null &&
+                (status.Id != _status.Id ||
+                status.Id != _status.ReblogOrSelf().Id))
             {
                 var tf = new TootForm(_ac, status);
                 tf.Show();
