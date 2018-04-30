@@ -47,7 +47,7 @@ namespace PocketToot
             }
         }
 
-        public string SendUrlencoded(string route, string method, QueryString data)
+        internal string SendUrlencoded(string route, string method, QueryString data)
         {
             var parsedRoute = MakeUri(route);
             var wr = WebRequest.Create(parsedRoute);

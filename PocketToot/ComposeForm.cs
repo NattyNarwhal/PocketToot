@@ -73,27 +73,16 @@ namespace PocketToot
             contentBox.SelectionStart = contentBox.Text.Length;
         }
 
-        QueryString ToQueryString()
-        {
-            var qs = new QueryString();
-            qs.Add("status", contentBox.Text);
-            if (_inReplyTo != null)
-                qs.Add("in_reply_to_id", _inReplyTo.Id.ToString());
-            if (!string.IsNullOrEmpty(cwBox.Text))
-                qs.Add("spoiler_text", cwBox.Text);
-            qs.Add("sensitive", sensitiveMenuItem.Checked.ToString());
-            qs.Add("visibility", Visibility);
-            return qs;
-        }
-
         public void SendStatus()
         {
             try
             {
-                var res = _ac.SendUrlencoded("/api/v1/statuses", "POST", ToQueryString());
-            
-                // we don't actually need it
-                JsonUtility.MaybeDeserialize<Types.Status>(res);
+                Types.Status.Post(_ac,
+                    contentBox.Text,
+                    cwBox.Text,
+                    sensitiveMenuItem.Checked,
+                    _inReplyTo != null ? _inReplyTo.Id : (long?)null,
+                    Visibility);
 
                 Close();
             }

@@ -22,7 +22,7 @@ namespace PocketToot
                 ? HtmlUtility.ToPlainText(toUse.Content)
                 : "CW: " + toUse.ContentWarning;
             lvi.Text = string.Format("{0}{1}: {2}",
-                item.Reblog != null ? "RT " : "",
+                item.ContainedReblog != null ? "RT " : "",
                 toUse.Account.AccountId,
                 title);
             return lvi;

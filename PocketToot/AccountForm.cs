@@ -19,9 +19,6 @@ namespace PocketToot
         List<Types.Status> _statuses;
         List<Types.Account> _followers, _following;
 
-        const string ACCOUNT_ROUTE_PREFIX_TEMPLATE = "/api/v1/accounts/{0}";
-        const string ACCOUNT_RELATIONSHIPS_ROUTE_TEMPLATE = "/api/v1/accounts/relationships?id={0}";
-
         public AccountForm()
         {
             InitializeComponent();
@@ -49,33 +46,15 @@ namespace PocketToot
         {
         }
 
-        string FormatAccountByIdRoute()
-        {
-            return string.Format(ACCOUNT_ROUTE_PREFIX_TEMPLATE, _accountId);
-        }
-
-        string FormatAccountByIdRoute(string route)
-        {
-            return string.Format("{0}/{1}", FormatAccountByIdRoute(), route);
-        }
-
         public void UpdateAccountInPlace()
         {
             try
             {
-                var accountJson = _ac.Get(FormatAccountByIdRoute());
-                _account = JsonUtility.MaybeDeserialize<Types.Account>(accountJson);
-                var statusesJson = _ac.Get(FormatAccountByIdRoute("statuses"));
-                _statuses = JsonUtility.MaybeDeserialize<List<Types.Status>>(statusesJson);
-                var followersJson = _ac.Get(FormatAccountByIdRoute("followers"));
-                _followers = JsonUtility.MaybeDeserialize<List<Types.Account>>(followersJson);
-                var followingJson = _ac.Get(FormatAccountByIdRoute("following"));
-                _following = JsonUtility.MaybeDeserialize<List<Types.Account>>(followingJson);
-                // a special case....
-                var relationshipsRoute = string.Format(ACCOUNT_RELATIONSHIPS_ROUTE_TEMPLATE, _accountId);
-                var relationshipsJson = _ac.Get(relationshipsRoute);
-                // it returns a list because you can give the route multiple....
-                _relationship = JsonUtility.MaybeDeserialize<List<Types.Relationship>>(relationshipsJson).SingleOrDefault();
+                _account = Types.Account.GetById(_ac, _accountId);
+                _statuses = _account.GetStatuses(_ac);
+                _followers = _account.GetFollowers(_ac);
+                _following = _account.GetFollowing(_ac);
+                _relationship = _account.GetRelationship(_ac);
             }
             catch (Exception e)
             {
@@ -174,9 +153,7 @@ namespace PocketToot
         {
             try
             {
-                var endpoint = _relationship.Following ? "unfollow" : "follow";
-                var s = _ac.SendUrlencoded(FormatAccountByIdRoute(endpoint), "POST", null);
-                _relationship = JsonUtility.MaybeDeserialize<Types.Relationship>(s);
+                _relationship = _relationship.Following ? _relationship.Unfollow(_ac) : _relationship.Follow(_ac);
                 followMenuItem.Checked = _relationship.Following;
             }
             catch (Exception ex)
@@ -196,30 +173,35 @@ namespace PocketToot
         {
             try
             {
-                var notifMute = false;
-                var qs = new QueryString();
-                // TODO: can mute/notif mute desync?
-                if (_relationship.Muting)
+                if (!_relationship.Muting)
                 {
-                    switch (MessageBox.Show("Do you want to mute notifications from this user as well?",
-                        "Muting",
-                        MessageBoxButtons.YesNoCancel,
-                        MessageBoxIcon.Question,
-                        MessageBoxDefaultButton.Button1))
+                    var notifMute = false;
+                    var qs = new QueryString();
+                    // TODO: can mute/notif mute desync?
+                    if (_relationship.Muting)
                     {
-                        case DialogResult.Yes:
-                            notifMute = true;
-                            break;
-                        case DialogResult.No:
-                            break;
-                        default: // incl cancel
-                            return;
+                        switch (MessageBox.Show("Do you want to mute notifications from this user as well?",
+                            "Muting",
+                            MessageBoxButtons.YesNoCancel,
+                            MessageBoxIcon.Question,
+                            MessageBoxDefaultButton.Button1))
+                        {
+                            case DialogResult.Yes:
+                                notifMute = true;
+                                break;
+                            case DialogResult.No:
+                                break;
+                            default: // incl cancel
+                                return;
+                        }
                     }
+                    qs.Add("notifications", notifMute.ToString());
+                    _relationship = _relationship.Mute(_ac, notifMute);
                 }
-                qs.Add("notifications", notifMute.ToString());
-                var endpoint = _relationship.Muting ? "unmute" : "mute";
-                var s = _ac.SendUrlencoded(FormatAccountByIdRoute(endpoint), "POST", qs);
-                _relationship = JsonUtility.MaybeDeserialize<Types.Relationship>(s);
+                else
+                {
+                    _relationship = _relationship.Unmute(_ac);
+                }
                 muteMenuItem.Checked = _relationship.Muting;
             }
             catch (Exception ex)
@@ -232,9 +214,7 @@ namespace PocketToot
         {
             try
             {
-                var endpoint = _relationship.Blocking ? "unblock" : "block";
-                var s = _ac.SendUrlencoded(FormatAccountByIdRoute(endpoint), "POST", null);
-                _relationship = JsonUtility.MaybeDeserialize<Types.Relationship>(s);
+                _relationship = _relationship.Blocking ? _relationship.Unblock(_ac) : _relationship.Block(_ac);
                 blockMenuItem.Checked = _relationship.Blocking;
             }
             catch (Exception ex)

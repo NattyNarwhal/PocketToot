@@ -6,27 +6,13 @@ using System.Text;
 
 namespace PocketToot.Types
 {
-    /*
-      "account": {
-        "id": 3,
-        "username": "bhtooefr",
-        "acct": "bhtooefr@mastodon.social",
-        "display_name": "",
-        "locked": false,
-        "created_at": "2017-11-11T02:02:06.407Z",
-        "note": "\\u003cp\\u003eComputing, transportation, energy... really anything interesting.\\u003c/p\\u003e\\u003cp\\u003eWeb: \\u003ca href=\"http://bhtooefr.org/\" rel=\"nofollow noopener\" target=\"_blank\"\\u003e\\u003cspan class=\"invisible\"\\u003ehttp://\\u003c/span\\u003e\\u003cspan class=\"\"\\u003ebhtooefr.org/\\u003c/span\\u003e\\u003cspan class=\"invisible\"\\u003e\\u003c/span\\u003e\\u003c/a\\u003e\\u003c/p\\u003e",
-        "url": "https://mastodon.social/@bhtooefr",
-        "avatar": "https://cronk.stenoweb.net/system/accounts/avatars/000/000/003/original/82cf71992886b4fb.jpg?1510365727",
-        "avatar_static": "https://cronk.stenoweb.net/system/accounts/avatars/000/000/003/original/82cf71992886b4fb.jpg?1510365727",
-        "header": "https://cronk.stenoweb.net/headers/original/missing.png",
-        "header_static": "https://cronk.stenoweb.net/headers/original/missing.png",
-        "followers_count": 2,
-        "following_count": 6,
-        "statuses_count": 32
-      },
-    */
     public class Account
     {
+        const string ACCOUNT_ROUTE_TEMPLATE = "/api/v1/accounts/{0}";
+        const string ACCOUNT_ROUTE_SUB_TEMPLATE = "/api/v1/accounts/{0}/{1}";
+        const string ACCOUNT_RELATIONSHIPS_ROUTE_TEMPLATE = "/api/v1/accounts/relationships?id={0}";
+        const string VERIFY_CREDENTIALS = "/api/v1/accounts/verify_credentials";
+
         [JsonProperty("id")]
         public long Id { get; set; }
         [JsonProperty("created_at")]
@@ -45,6 +31,15 @@ namespace PocketToot.Types
                 return string.IsNullOrEmpty(DisplayName) ? UserName : DisplayName;
             }
         }
+
+        [JsonProperty("header")]
+        public string HeaderUrl { get; set; }
+        [JsonProperty("header_static")]
+        public string HeaderUrlStatic { get; set; }
+        [JsonProperty("avatar")]
+        public string AvatarUrl { get; set; }
+        [JsonProperty("avatar_static")]
+        public string AvatarUrlStatic { get; set; }
 
         [JsonProperty("locked")]
         public bool Locked { get; set; }
@@ -67,6 +62,58 @@ namespace PocketToot.Types
         {
             var dispName = string.IsNullOrEmpty(DisplayName) ? UserName : DisplayName;
             return string.Format("{0} <@{1}>", dispName, AccountId);
+        }
+
+        // Notes on the following functions as this is first file with:
+        //  * ApiClient is passed as deserialization wouldn't give us an
+        //    oppurtunity to inject it.
+        //  * These aren't getters because it could confuse deserialization and
+        //    to me, properties imply something only a little heavier than
+        //    using a field directly (like validation) - a network call is
+        //    something too far.
+
+        public Relationship GetRelationship(ApiClient ac)
+        {
+            var route = string.Format(ACCOUNT_RELATIONSHIPS_ROUTE_TEMPLATE, Id);
+            var rJson = ac.Get(route);
+            var rList = JsonUtility.MaybeDeserialize<List<Relationship>>(rJson);
+            return rList.FirstOrDefault();
+        }
+        
+        // TODO: various options for this
+        public List<Status> GetStatuses(ApiClient ac)
+        {
+            var route = string.Format(ACCOUNT_ROUTE_SUB_TEMPLATE, Id, "statuses");
+            var sJson = ac.Get(route);
+            return JsonUtility.MaybeDeserialize<List<Status>>(sJson);
+        }
+
+        // TODO: Pagination for these two (it's passed through header)
+        public List<Account> GetFollowers(ApiClient ac)
+        {
+            var route = string.Format(ACCOUNT_ROUTE_SUB_TEMPLATE, Id, "followers");
+            var uJson = ac.Get(route);
+            return JsonUtility.MaybeDeserialize<List<Account>>(uJson);
+        }
+
+        public List<Account> GetFollowing(ApiClient ac)
+        {
+            var route = string.Format(ACCOUNT_ROUTE_SUB_TEMPLATE, Id, "following");
+            var uJson = ac.Get(route);
+            return JsonUtility.MaybeDeserialize<List<Account>>(uJson);
+        }
+
+        public static Account GetById(ApiClient ac, long id)
+        {
+            var route = string.Format(ACCOUNT_ROUTE_TEMPLATE, id);
+            var uJson = ac.Get(route);
+            return JsonUtility.MaybeDeserialize<Account>(uJson);
+        }
+
+        public static Account GetSelf(ApiClient ac)
+        {
+            var uJson = ac.Get(VERIFY_CREDENTIALS);
+            return JsonUtility.MaybeDeserialize<Account>(uJson);
         }
     }
 }

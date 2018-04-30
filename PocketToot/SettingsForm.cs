@@ -13,8 +13,6 @@ namespace PocketToot
 {
     public partial class SettingsForm : Form
     {
-        const string VERIFY_CREDENTIALS = "/api/v1/accounts/verify_credentials";
-
         ApiClient ac;
 
         public SettingsForm()
@@ -42,8 +40,7 @@ namespace PocketToot
             try
             {
                 var tempAc = new ApiClient(hostnameBox.Text, tokenBox.Text);
-                var uJson = tempAc.Get(VERIFY_CREDENTIALS);
-                var u = JsonUtility.MaybeDeserialize<Types.Account>(uJson);
+                var u = Types.Account.GetSelf(tempAc);
                 MessageBox.Show(string.Format("Logged in as {0}.", u.AccountId), "Successfully verified");
             }
             catch (Exception ex)

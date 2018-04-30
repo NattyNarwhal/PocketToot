@@ -17,8 +17,6 @@ namespace PocketToot
         ApiClient _ac;
         Types.Status _status;
 
-        const string STATUS_ROUTE_TEMPLATE = "/api/v1/statuses/{0}/{1}";
-
         public TootForm()
         {
             InitializeComponent();
@@ -46,9 +44,7 @@ namespace PocketToot
             // try to fetch refreshed status or fall back on given param
             try
             {
-                var newStatusJson = _ac.Get(FormatStatusRoute());
-                var newStatus = JsonUtility.MaybeDeserialize<Types.Status>(newStatusJson);
-                _status = newStatus;
+                _status = Types.Status.GetById(_ac, _status.Id);
             }
             catch (Exception e)
             {
@@ -61,7 +57,7 @@ namespace PocketToot
             var toUse = status.ReblogOrSelf();
 
             metaListView.Items.Clear();
-            if (status.Reblog != null)
+            if (status.ContainedReblog != null)
             {
                 AddMeta("Boost from", status.Account);
                 AddMeta("Boost date", status.CreatedAt);
@@ -120,8 +116,7 @@ namespace PocketToot
             {
                 threadBox.BeginUpdate();
 
-                var contextJson = _ac.Get(FormatStatusRoute("context"));
-                var context = JsonUtility.MaybeDeserialize<Types.Context>(contextJson);
+                var context = _status.GetContext(_ac);
 
                 threadBox.Items.Clear();
                 foreach (var s in context.Ancestors.Concat(context.Descendants))
@@ -168,22 +163,6 @@ namespace PocketToot
             lvi.Text = n;
             lvi.SubItems.Add(vso);
             metaListView.Items.Add(lvi);
-        }
-
-        string FormatStatusRoute()
-        {
-            return string.Format("/api/v1/statuses/{0}", _status.Id);
-        }
-
-        string FormatStatusRoute(string statusEndpoint)
-        {
-            return FormatStatusRoute(statusEndpoint, true);
-        }
-
-        string FormatStatusRoute(string statusEndpoint, bool useReblogged)
-        {
-            var status = useReblogged ? _status.ReblogOrSelf() : _status;
-            return string.Format(STATUS_ROUTE_TEMPLATE, status.Id, statusEndpoint);
         }
 
         private void browserMenuItem_Click(object sender, EventArgs e)
@@ -261,10 +240,7 @@ namespace PocketToot
         {
             try
             {
-                var toUse = _status.ReblogOrSelf();
-                var endpoint = toUse.HasReblogged.Coerce() ? "unreblog" : "reblog";
-                var s = _ac.SendUrlencoded(FormatStatusRoute(endpoint), "POST", null);
-                _status = JsonUtility.MaybeDeserialize<Types.Status>(s);
+                _status = _status.HasReblogged.Coerce() ? _status.Unreblog(_ac) : _status.Reblog(_ac);
                 boostMenuItem.Checked = _status.ReblogOrSelf().HasReblogged.Coerce();
             }
             catch (Exception ex)
@@ -277,10 +253,7 @@ namespace PocketToot
         {
             try
             {
-                var toUse = _status.ReblogOrSelf();
-                var endpoint = toUse.HasFavourited.Coerce() ? "unfavourite" : "favourite";
-                var s = _ac.SendUrlencoded(FormatStatusRoute(endpoint), "POST", null);
-                _status = JsonUtility.MaybeDeserialize<Types.Status>(s);
+                _status = _status.HasFavourited.Coerce() ? _status.Unfavourite(_ac) : _status.Favourite(_ac);
                 favMenuItem.Checked = _status.ReblogOrSelf().HasFavourited.Coerce();
             }
             catch (Exception ex)
@@ -309,11 +282,8 @@ namespace PocketToot
         {
             try
             {
-                var toUse = _status.ReblogOrSelf();
-                var endpoint = toUse.Pinned.Coerce() ? "unpin" : "pin";
-                var s = _ac.SendUrlencoded(FormatStatusRoute(endpoint), "POST", null);
-                _status = JsonUtility.MaybeDeserialize<Types.Status>(s);
-                pinMenuItem.Checked = _status.ReblogOrSelf().Pinned.Coerce();
+                _status = _status.Pinned.Coerce() ? _status.Unpin(_ac) : _status.Pin(_ac);
+                pinMenuItem.Checked = _status.Pinned.Coerce();
             }
             catch (Exception ex)
             {
@@ -325,8 +295,8 @@ namespace PocketToot
         {
             try
             {
-                var toUse = _status.ReblogOrSelf(); 
-                var s = _ac.SendUrlencoded(FormatStatusRoute(), "DELETE", null);
+                var toUse = _status.ReblogOrSelf();
+                toUse.Delete(_ac);
                 Close();
             }
             catch (Exception ex)
@@ -339,11 +309,8 @@ namespace PocketToot
         {
             try
             {
-                var toUse = _status.ReblogOrSelf(); // XXX?
-                var endpoint = toUse.Muted.Coerce() ? "unmute" : "mute";
-                var s = _ac.SendUrlencoded(FormatStatusRoute(endpoint), "POST", null);
-                _status = JsonUtility.MaybeDeserialize<Types.Status>(s);
-                muteConvMenuItem.Checked = _status.ReblogOrSelf().Muted.Coerce();
+                _status = _status.Muted.Coerce() ? _status.Unmute(_ac) : _status.Mute(_ac);
+                muteConvMenuItem.Checked = _status.Muted.Coerce();
             }
             catch (Exception ex)
             {
