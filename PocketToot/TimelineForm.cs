@@ -14,13 +14,9 @@ namespace PocketToot
     public partial class TimelineForm : Form
     {
         ApiClient _ac;
-        string _timelineRoute;
-        QueryString _baseQs;
-
-        // TODO: move these and others
-        const string HOME_TIMELINE_ROUTE = "/api/v1/timelines/home";
-        const string PUBLIC_TIMELINE_ROUTE = "/api/v1/timelines/public";
-        public const string TAG_TIMELINE_ROUTE_PREFIX = "/api/v1/timelines/tag/";
+        TimelineType _type;
+        string _tagName;
+        long? _before, _after;
 
         // init for designer/app launch (special because of special init)
         public TimelineForm()
@@ -31,43 +27,51 @@ namespace PocketToot
             var token = Settings.GetSetting("InstanceToken", "");
 
             _ac = new ApiClient(hostname, token);
-            _baseQs = new QueryString();
 
-            SetTimeline(HOME_TIMELINE_ROUTE, "Home Timeline");
+            SetTimeline(TimelineType.Home);
         }
 
         // init for tag/other timelines
-        public TimelineForm(ApiClient client, string title, string route, QueryString qs)
+        public TimelineForm(ApiClient client, TimelineType type)
         {
             InitializeComponent();
 
             _ac = client;
-            _baseQs = qs;
 
-            SetTimeline(route, title);
+            SetTimeline(type);
         }
 
-        public TimelineForm(ApiClient client, string title, string route)
-            : this(client, title, route, new QueryString())
+        public TimelineForm(ApiClient client, string tagName)
         {
+            InitializeComponent();
+
+            _ac = client;
+            _tagName = tagName;
+
+            SetTimeline(TimelineType.Tag);
         }
 
         // TODO: we should keep track of open windows to avoid getting a nest
         // of home/public timeline windows open... and perhaps keep the only
         // HTL window as the root one to avoid confusion
-        protected void SetTimeline(string route, string title)
+        // TODO: should be a property? tag case though
+        protected void SetTimeline(TimelineType type)
         {
-            Text = title;
-            _timelineRoute = route;
-
-            if (route == PUBLIC_TIMELINE_ROUTE)
+            _type = type;
+            switch (type)
             {
-                publicTimelineMenuItem.Checked = true;
-                publicTimelineMenuItem.Enabled = false;
-            }
-            else if (route.StartsWith(TAG_TIMELINE_ROUTE_PREFIX))
-            {
-                tagTimelineMenuItem.Checked = true;
+                case TimelineType.Home:
+                    Text = "Home Timeline";
+                    break;
+                case TimelineType.Local:
+                    Text = "Local Timeline";
+                    break;
+                case TimelineType.Federated:
+                    Text = "Federated Timeline";
+                    break;
+                case TimelineType.Tag:
+                    Text = "#" + _tagName;
+                    break;
             }
         }
 
@@ -80,7 +84,7 @@ namespace PocketToot
                 _ac.Token = Settings.GetSetting("InstanceToken", "");
             }
 
-            RefreshTimeline();
+            RefreshTimeline(true, false, null, null);
             statusListView.Focus();
         }
 
@@ -94,41 +98,48 @@ namespace PocketToot
             }
         }
 
-        string MakeRouteUrl()
-        {
-            return string.Format("{0}?{1}", _timelineRoute, _baseQs.ToQueryString());
-        }
-
-        string MakeRouteUrl(QueryString toAppend)
-        {
-            var qs = new StringBuilder(_baseQs.ToQueryString());
-            if (toAppend != null)
-            {
-                qs.Append("&");
-                qs.Append(toAppend.ToQueryString());
-            }
-            return string.Format("{0}?{1}", _timelineRoute, qs);
-        }
-
-        public void RefreshTimeline()
-        {
-            RefreshTimeline(MakeRouteUrl(), true, false);
-        }
-
-        public void RefreshTimeline(string route, bool clear, bool insertAbove)
+        public void RefreshTimeline(bool clear, bool insertAbove, long? before, long? after)
         {
             statusListView.BeginUpdate();
 
             try
             {
-                var s = _ac.Get(route);
-                var sl = JsonUtility.MaybeDeserialize<List<Types.Status>>(s);
+                Paginated<Types.Status> page = null;
+
+                switch (_type)
+                {
+                    case TimelineType.Home:
+                        page = TimelineUtils.GetHomeTimeline(_ac, before, after);
+                        break;
+                    case TimelineType.Local:
+                        page = TimelineUtils.GetPublicTimeline(_ac, true, false, before, after);
+                        break;
+                    case TimelineType.Federated:
+                        page = TimelineUtils.GetPublicTimeline(_ac, false, false, before, after);
+                        break;
+                    case TimelineType.Tag:
+                        page = Types.Tag.GetTimeline(_ac, _tagName, false, false, before, after);
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                // TODO: handle cases where we can't just stretch IDs (like favs)
+                if (_before.HasValue && page.Before.HasValue)
+                    _before = Math.Min(_before.Value, page.Before.Value);
+                else if (page.Before.HasValue)
+                    _before = page.Before.Value;
+
+                if (_after.HasValue && page.After.HasValue)
+                    _after = Math.Max(_after.Value, page.After.Value);
+                else if (page.After.HasValue)
+                    _after = page.After.Value;
 
                 if (clear)
                     statusListView.Items.Clear();
 
                 var posWhenAbove = 0;
-                foreach (var status in sl)
+                foreach (var status in page.Items)
                 {
                     if (insertAbove)
                         statusListView.Items.Insert(posWhenAbove++, status);
@@ -152,15 +163,11 @@ namespace PocketToot
         {
             if (statusListView.Items.Count == 0)
             {
-                RefreshTimeline();
+                RefreshTimeline(true, false, null, null);
                 return;
             }
 
-            var qs = new QueryString();
-            qs.Add("max_id", statusListView.Items.Last().Id.ToString());
-
-            var routeWithQs = string.Format(MakeRouteUrl(qs));
-            RefreshTimeline(routeWithQs, false, false);
+            RefreshTimeline(false, false, _before, null);
         }
 
         private void refreshMenuItem_Click(object sender, EventArgs e)
@@ -168,15 +175,11 @@ namespace PocketToot
             // this menu item now just pulls in new and doesnt replace
             if (statusListView.Items.Count == 0)
             {
-                RefreshTimeline();
+                RefreshTimeline(true, false, null, null);
                 return;
             }
 
-            var qs = new QueryString();
-            qs.Add("since_id", statusListView.Items.First().Id.ToString());
-
-            var routeWithQs = string.Format(MakeRouteUrl(qs));
-            RefreshTimeline(routeWithQs, false, true);
+            RefreshTimeline(false, true, null, _after);
         }
 
         public void ShowSettings()
@@ -191,14 +194,14 @@ namespace PocketToot
             {
                 try
                 {
-                    var authorRoute = "/api/v1/accounts/search?q=calvin%40cronk.stenoweb.net";
-                    var authorJson = _ac.Get(authorRoute);
-                    var author = JsonUtility.MaybeDeserialize<List<Types.Account>>(authorJson).FirstOrDefault();
-                    if (author != null)
-                    {
-                        var af = new AccountForm(_ac, author);
-                        af.Show();
-                    }
+                    //var authorRoute = "/api/v1/accounts/search?q=calvin%40cronk.stenoweb.net";
+                    //var authorJson = _ac.Get(authorRoute);
+                    //var author = JsonUtility.MaybeDeserialize<List<Types.Account>>(authorJson).FirstOrDefault();
+                    //if (author != null)
+                    //{
+                    //    var af = new AccountForm(_ac, author);
+                    //    af.Show();
+                    //}
                 }
                 catch (Exception e)
                 {
@@ -225,16 +228,13 @@ namespace PocketToot
 
         private void publicTimelineMenuItem_Click(object sender, EventArgs e)
         {
-            var tf = new TimelineForm(_ac, "Federated Timeline", PUBLIC_TIMELINE_ROUTE);
+            var tf = new TimelineForm(_ac, TimelineType.Federated);
             tf.Show();
         }
 
         private void localPublicTumelineMenuItem_Click(object sender, EventArgs e)
         {
-            var qs = new QueryString();
-            qs.Add("local", "true");
-
-            var tf = new TimelineForm(_ac, "Local Timeline", PUBLIC_TIMELINE_ROUTE, qs);
+            var tf = new TimelineForm(_ac, TimelineType.Local);
             tf.Show();
         }
 
@@ -248,10 +248,7 @@ namespace PocketToot
 
             if (!string.IsNullOrEmpty(tag))
             {
-                var tagRoute = string.Format("{0}{1}",
-                    TAG_TIMELINE_ROUTE_PREFIX,
-                    QueryString.EscapeUriDataStringRfc3986(tag));
-                var tf = new TimelineForm(_ac, "#" + tag, tagRoute);
+                var tf = new TimelineForm(_ac, tag);
                 tf.Show();
             }
         }

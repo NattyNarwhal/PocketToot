@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PocketToot.Types
 {
-    public class Account
+    public class Account : IId
     {
         const string ACCOUNT_ROUTE_TEMPLATE = "/api/v1/accounts/{0}";
         const string ACCOUNT_ROUTE_SUB_TEMPLATE = "/api/v1/accounts/{0}/{1}";

@@ -7,7 +7,7 @@ using Newtonsoft.Json.Converters;
 
 namespace PocketToot.Types
 {
-    public class Status
+    public class Status : IId
     {
         const string STATUS_ROUTE_TEMPLATE = "/api/v1/statuses/{0}/{1}";
 

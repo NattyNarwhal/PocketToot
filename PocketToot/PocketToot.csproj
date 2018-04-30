@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{1E346313-8D72-44DE-AFDE-0D21CE2FCB4C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -135,6 +135,7 @@
     <Compile Include="SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TimelineType.cs" />
     <Compile Include="TootForm.cs">
       <SubType>Form</SubType>
     </Compile>

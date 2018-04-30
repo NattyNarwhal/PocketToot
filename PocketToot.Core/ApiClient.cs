@@ -27,7 +27,8 @@ namespace PocketToot
         }
 
         // XXX: handtuned REST will likely get ugly, switch to last CF version of RestSharp instead?
-        public string Get(string route)
+        // TODO: Let consumers access headers (likely a new overload)
+        internal string Get(string route)
         {
             var parsedRoute = MakeUri(route);
             var wr = WebRequest.Create(parsedRoute);
