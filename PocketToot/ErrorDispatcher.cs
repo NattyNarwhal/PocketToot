@@ -17,6 +17,8 @@ namespace PocketToot
                 title = "HTTP Error";
             else if (e is JsonSerializationException)
                 title = "Serialization Error";
+            else if (e is ApiException)
+                title = "API Error";
             title += " in " + where;
 
             MessageBox.Show(e.Message,

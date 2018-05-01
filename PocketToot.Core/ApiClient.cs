@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace PocketToot
 {
@@ -26,36 +27,80 @@ namespace PocketToot
 #endif
         }
 
+        static string ReadToEnd(Stream s)
+        {
+            using (var sr = new StreamReader(s))
+            {
+                var str = sr.ReadToEnd();
+                return str;
+            }
+        }
+
+        WebRequest CreateWebRequest(string rawRoute)
+        {
+            var parsedRoute = MakeUri(rawRoute);
+            var wr = WebRequest.Create(parsedRoute);
+
+            wr.Headers.Add("Authorization",
+                string.Format("Bearer {0}", Token));
+
+            return wr;
+        }
+
+        static void HandleWebException(WebException e1)
+        {
+            try
+            {
+                // try to extract an error object
+                using (var rs = e1.Response.GetResponseStream())
+                {
+                    var json = ReadToEnd(rs);
+                    var error = JsonConvert.DeserializeObject<Types.Error>(json);
+                    throw new ApiException(error, json, e1.Response);
+                }
+            }
+            catch (ApiException e2)
+            {
+                throw e2;
+            }
+            catch (Exception)
+            {
+                // fall back
+                throw e1;
+            }
+        }
+
+        static string ReadString(WebRequest wr)
+        {
+            try
+            {
+
+                var r = wr.GetResponse();
+                using (var rs = r.GetResponseStream())
+                {
+                    return ReadToEnd(rs);
+                }
+            }
+            catch (WebException e1)
+            {
+                HandleWebException(e1);
+                return null;
+            }
+        }
+
         // XXX: handtuned REST will likely get ugly, switch to last CF version of RestSharp instead?
         // TODO: Let consumers access headers (likely a new overload)
         internal string Get(string route)
         {
-            var parsedRoute = MakeUri(route);
-            var wr = WebRequest.Create(parsedRoute);
-
+            var wr = CreateWebRequest(route);
             wr.Method = "GET";
-            wr.Headers.Add("Authorization",
-                string.Format("Bearer {0}", Token));
-
-            var r = wr.GetResponse();
-            using (var rs = r.GetResponseStream())
-            {
-                using (var sr = new StreamReader(rs))
-                {
-                    var s = sr.ReadToEnd();
-                    return s;
-                }
-            }
+            return ReadString(wr);
         }
 
         internal string SendUrlencoded(string route, string method, QueryString data)
         {
-            var parsedRoute = MakeUri(route);
-            var wr = WebRequest.Create(parsedRoute);
-
+            var wr = CreateWebRequest(route);
             wr.Method = method ?? "POST";
-            wr.Headers.Add("Authorization",
-                string.Format("Bearer {0}", Token));
 
             if (data != null)
             {
@@ -71,15 +116,7 @@ namespace PocketToot
                 }
             }
 
-            var r = wr.GetResponse();
-            using (var rs = r.GetResponseStream())
-            {
-                using (var sr = new StreamReader(rs))
-                {
-                    var s = sr.ReadToEnd();
-                    return s;
-                }
-            }
+            return ReadString(wr);
         }
 
         string MakeUri(string route)

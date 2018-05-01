@@ -8,7 +8,7 @@ namespace PocketToot.Types
 {
     public class Error
     {
-        [JsonProperty("message")]
+        [JsonProperty("error")]
         public string Message { get; set; }
     }
 }

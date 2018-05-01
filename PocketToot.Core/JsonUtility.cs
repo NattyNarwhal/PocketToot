@@ -18,7 +18,7 @@ namespace PocketToot
             {
                 var error = JsonConvert.DeserializeObject<Types.Error>(json);
                 if (error != null && error.Message != null)
-                    throw new ApiException(error);
+                    throw new ApiException(error, json, null);
                 else
                     throw e;
             }
