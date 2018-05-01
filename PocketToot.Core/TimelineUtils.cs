@@ -50,5 +50,23 @@ namespace PocketToot
             var route = string.Format("{0}?{1}", PUBLIC_TIMELINE_ROUTE, qs.ToQueryString());
             return GetTimeline(ac, route);
         }
+
+        public static Paginated<Types.Status> GetFavourites(ApiClient ac,
+            long? before,
+            long? after)
+        {
+            var qs = new QueryString();
+            if (before.HasValue)
+                qs.Add("max_id", before.Value.ToString());
+            if (after.HasValue)
+                qs.Add("since_id", after.Value.ToString());
+
+            var route = string.Format("/api/v1/favourites?{0}", qs.ToQueryString());
+            var res = ac.GetResponse(route);
+            var list = JsonUtility.MaybeDeserialize<List<Types.Status>>(res.Content);
+            var linkHeader = res.Headers["Link"];
+
+            throw new NotImplementedException();
+        }
     }
 }

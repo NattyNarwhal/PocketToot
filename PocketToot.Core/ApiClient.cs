@@ -11,6 +11,19 @@ namespace PocketToot
     // https://github.com/tootsuite/documentation/tree/master/Using-the-API
     public class ApiClient
     {
+        internal class ApiRawResponse
+        {
+            public string Content { get; private set; }
+
+            public WebHeaderCollection Headers { get; private set; }
+
+            public ApiRawResponse(WebResponse wr)
+            {
+                Headers = wr.Headers;
+                Content = ReadToEnd(wr.GetResponseStream());
+            }
+        }
+
         public string Token { get; set; }
         public string Hostname { get; set; }
 
@@ -70,16 +83,20 @@ namespace PocketToot
             }
         }
 
-        static string ReadString(WebRequest wr)
+        static string GetWebResponseAsString(WebRequest wr)
+        {
+            var r = GetWebResponse(wr);
+            using (var rs = r.GetResponseStream())
+            {
+                return ReadToEnd(rs);
+            }
+        }
+
+        static WebResponse GetWebResponse(WebRequest wr)
         {
             try
             {
-
-                var r = wr.GetResponse();
-                using (var rs = r.GetResponseStream())
-                {
-                    return ReadToEnd(rs);
-                }
+                return wr.GetResponse();
             }
             catch (WebException e1)
             {
@@ -92,9 +109,14 @@ namespace PocketToot
         // TODO: Let consumers access headers (likely a new overload)
         internal string Get(string route)
         {
+            return GetResponse(route).Content;
+        }
+
+        internal ApiRawResponse GetResponse(string route)
+        {
             var wr = CreateWebRequest(route);
             wr.Method = "GET";
-            return ReadString(wr);
+            return new ApiRawResponse(GetWebResponse(wr));
         }
 
         internal string SendUrlencoded(string route, string method, QueryString data)
@@ -116,7 +138,7 @@ namespace PocketToot
                 }
             }
 
-            return ReadString(wr);
+            return GetWebResponseAsString(wr);
         }
 
         string MakeUri(string route)
