@@ -11,7 +11,7 @@ namespace PocketToot
         public long? Before { get; private set; }
         public long? After { get; private set; }
 
-        public Paginated(IEnumerable<T> items, long max, long since)
+        public Paginated(IEnumerable<T> items, long? max, long? since)
         {
             Items = items;
             Before = max;

@@ -261,5 +261,11 @@ namespace PocketToot
         {
             ShowMore();
         }
+
+        private void favouritesMenuItem_Click(object sender, EventArgs e)
+        {
+            var ff = new FavouritesForm(_ac);
+            ff.Show();
+        }
     }
 }

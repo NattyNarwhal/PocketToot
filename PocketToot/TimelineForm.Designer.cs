@@ -33,14 +33,16 @@
             this.composeMenuItem = new System.Windows.Forms.MenuItem();
             this.menu = new System.Windows.Forms.MenuItem();
             this.timelineMenu = new System.Windows.Forms.MenuItem();
+            this.localPublicTumelineMenuItem = new System.Windows.Forms.MenuItem();
             this.publicTimelineMenuItem = new System.Windows.Forms.MenuItem();
             this.tagTimelineMenuItem = new System.Windows.Forms.MenuItem();
             this.refreshMenuItem = new System.Windows.Forms.MenuItem();
+            this.showMoreMenuItem = new System.Windows.Forms.MenuItem();
             this.sep1 = new System.Windows.Forms.MenuItem();
             this.settingsMenuItem = new System.Windows.Forms.MenuItem();
-            this.showMoreMenuItem = new System.Windows.Forms.MenuItem();
             this.statusListView = new PocketToot.TootListView();
-            this.localPublicTumelineMenuItem = new System.Windows.Forms.MenuItem();
+            this.favouritesMenuItem = new System.Windows.Forms.MenuItem();
+            this.sep2 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -56,6 +58,8 @@
             // menu
             // 
             this.menu.MenuItems.Add(this.timelineMenu);
+            this.menu.MenuItems.Add(this.favouritesMenuItem);
+            this.menu.MenuItems.Add(this.sep2);
             this.menu.MenuItems.Add(this.refreshMenuItem);
             this.menu.MenuItems.Add(this.showMoreMenuItem);
             this.menu.MenuItems.Add(this.sep1);
@@ -68,6 +72,11 @@
             this.timelineMenu.MenuItems.Add(this.publicTimelineMenuItem);
             this.timelineMenu.MenuItems.Add(this.tagTimelineMenuItem);
             this.timelineMenu.Text = "Change &Timeline";
+            // 
+            // localPublicTumelineMenuItem
+            // 
+            this.localPublicTumelineMenuItem.Text = "&Local Timeline";
+            this.localPublicTumelineMenuItem.Click += new System.EventHandler(this.localPublicTumelineMenuItem_Click);
             // 
             // publicTimelineMenuItem
             // 
@@ -84,6 +93,11 @@
             this.refreshMenuItem.Text = "&Refresh";
             this.refreshMenuItem.Click += new System.EventHandler(this.refreshMenuItem_Click);
             // 
+            // showMoreMenuItem
+            // 
+            this.showMoreMenuItem.Text = "Show &More";
+            this.showMoreMenuItem.Click += new System.EventHandler(this.showMoreMenuItem_Click);
+            // 
             // sep1
             // 
             this.sep1.Text = "-";
@@ -92,11 +106,6 @@
             // 
             this.settingsMenuItem.Text = "&Settings...";
             this.settingsMenuItem.Click += new System.EventHandler(this.settingsMenuItem_Click);
-            // 
-            // showMoreMenuItem
-            // 
-            this.showMoreMenuItem.Text = "Show &More";
-            this.showMoreMenuItem.Click += new System.EventHandler(this.showMoreMenuItem_Click);
             // 
             // statusListView
             // 
@@ -111,10 +120,14 @@
             this.statusListView.View = System.Windows.Forms.View.Details;
             this.statusListView.ItemActivate += new System.EventHandler(this.listView1_ItemActivate);
             // 
-            // localPublicTumelineMenuItem
+            // favouritesMenuItem
             // 
-            this.localPublicTumelineMenuItem.Text = "&Local Timeline";
-            this.localPublicTumelineMenuItem.Click += new System.EventHandler(this.localPublicTumelineMenuItem_Click);
+            this.favouritesMenuItem.Text = "&Favourites";
+            this.favouritesMenuItem.Click += new System.EventHandler(this.favouritesMenuItem_Click);
+            // 
+            // sep2
+            // 
+            this.sep2.Text = "-";
             // 
             // TimelineForm
             // 
@@ -144,6 +157,8 @@
         private TootListView statusListView;
         private System.Windows.Forms.MenuItem showMoreMenuItem;
         private System.Windows.Forms.MenuItem localPublicTumelineMenuItem;
+        private System.Windows.Forms.MenuItem favouritesMenuItem;
+        private System.Windows.Forms.MenuItem sep2;
 
     }
 }

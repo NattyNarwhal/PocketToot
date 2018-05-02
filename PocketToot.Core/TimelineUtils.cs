@@ -2,13 +2,17 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace PocketToot
 {
     public static class TimelineUtils
     {
-        public const string HOME_TIMELINE_ROUTE = "/api/v1/timelines/home";
-        public const string PUBLIC_TIMELINE_ROUTE = "/api/v1/timelines/public";
+        const string HOME_TIMELINE_ROUTE = "/api/v1/timelines/home";
+        const string PUBLIC_TIMELINE_ROUTE = "/api/v1/timelines/public";
+
+        // <.*?(since_id|max_id)=(\d*)>; rel="(.*?)"
+        const string LINK_HEADER_REGEX = "<.*?(?<param>since_id|max_id)=(?<number>\\d*)>; rel=\"(?<rel>.*?)\"";
 
         internal static Paginated<Types.Status> GetTimeline(ApiClient ac, string route)
         {
@@ -66,7 +70,31 @@ namespace PocketToot
             var list = JsonUtility.MaybeDeserialize<List<Types.Status>>(res.Content);
             var linkHeader = res.Headers["Link"];
 
-            throw new NotImplementedException();
+            long? newBefore = null;
+            long? newAfter = null;
+            if (linkHeader != null)
+            {
+                // Mastodon returns Link headers like:
+                // <https://cronk.stenoweb.net/api/v1/timelines/public?max_id=99960437297163961>; rel="next",
+                // <https://cronk.stenoweb.net/api/v1/timelines/public?since_id=99960515001287338>; rel="prev"
+                var linkMatches = Regex.Matches(linkHeader, LINK_HEADER_REGEX);
+                foreach (Match match in linkMatches)
+                {
+                    var rel = match.Groups["rel"];
+                    if (rel.Value == "prev")
+                    {
+                        // prev/since_id/after
+                        newAfter = long.Parse(match.Groups["number"].Value);
+                    }
+                    else if (rel.Value == "next")
+                    {
+                        // next/max_id/before
+                        newBefore = long.Parse(match.Groups["number"].Value);
+                    }
+                }
+            }
+
+            return new Paginated<PocketToot.Types.Status>(list, newBefore, newAfter);
         }
     }
 }
