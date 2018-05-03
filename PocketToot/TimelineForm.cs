@@ -267,5 +267,12 @@ namespace PocketToot
             var ff = new FavouritesForm(_ac);
             ff.Show();
         }
+
+        private void myProfileMenuItem_Click(object sender, EventArgs e)
+        {
+            var account = Types.Account.GetSelf(_ac);
+            var af = new AccountForm(_ac, account);
+            af.Show();
+        }
     }
 }

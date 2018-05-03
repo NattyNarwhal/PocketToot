@@ -40,9 +40,11 @@
             this.showMoreMenuItem = new System.Windows.Forms.MenuItem();
             this.sep1 = new System.Windows.Forms.MenuItem();
             this.settingsMenuItem = new System.Windows.Forms.MenuItem();
-            this.statusListView = new PocketToot.TootListView();
             this.favouritesMenuItem = new System.Windows.Forms.MenuItem();
             this.sep2 = new System.Windows.Forms.MenuItem();
+            this.statusListView = new PocketToot.TootListView();
+            this.myProfileMenuItem = new System.Windows.Forms.MenuItem();
+            this.sep3 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -63,6 +65,8 @@
             this.menu.MenuItems.Add(this.refreshMenuItem);
             this.menu.MenuItems.Add(this.showMoreMenuItem);
             this.menu.MenuItems.Add(this.sep1);
+            this.menu.MenuItems.Add(this.myProfileMenuItem);
+            this.menu.MenuItems.Add(this.sep3);
             this.menu.MenuItems.Add(this.settingsMenuItem);
             this.menu.Text = "&Menu";
             // 
@@ -107,6 +111,15 @@
             this.settingsMenuItem.Text = "&Settings...";
             this.settingsMenuItem.Click += new System.EventHandler(this.settingsMenuItem_Click);
             // 
+            // favouritesMenuItem
+            // 
+            this.favouritesMenuItem.Text = "&Favourites";
+            this.favouritesMenuItem.Click += new System.EventHandler(this.favouritesMenuItem_Click);
+            // 
+            // sep2
+            // 
+            this.sep2.Text = "-";
+            // 
             // statusListView
             // 
             this.statusListView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -120,14 +133,14 @@
             this.statusListView.View = System.Windows.Forms.View.Details;
             this.statusListView.ItemActivate += new System.EventHandler(this.listView1_ItemActivate);
             // 
-            // favouritesMenuItem
+            // myProfileMenuItem
             // 
-            this.favouritesMenuItem.Text = "&Favourites";
-            this.favouritesMenuItem.Click += new System.EventHandler(this.favouritesMenuItem_Click);
+            this.myProfileMenuItem.Text = "My &Profile";
+            this.myProfileMenuItem.Click += new System.EventHandler(this.myProfileMenuItem_Click);
             // 
-            // sep2
+            // sep3
             // 
-            this.sep2.Text = "-";
+            this.sep3.Text = "-";
             // 
             // TimelineForm
             // 
@@ -159,6 +172,8 @@
         private System.Windows.Forms.MenuItem localPublicTumelineMenuItem;
         private System.Windows.Forms.MenuItem favouritesMenuItem;
         private System.Windows.Forms.MenuItem sep2;
+        private System.Windows.Forms.MenuItem myProfileMenuItem;
+        private System.Windows.Forms.MenuItem sep3;
 
     }
 }
