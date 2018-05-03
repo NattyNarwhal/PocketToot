@@ -66,6 +66,17 @@ namespace PocketToot
         {
             Text = _account.ToString();
 
+            if (_account.MovedTo != null)
+            {
+                movedToPanel.Visible = true;
+                movedToLabel.Text = string.Format("Moved to {0}", _account.MovedTo);
+            }
+            else
+            {
+                movedToPanel.Visible = false;
+                movedToLabel.Text = string.Format("Account hasn't moved");
+            }
+
             bioBox.DocumentText = _account.Note;
 
             // TODO: We scroll in more of all of these
@@ -220,6 +231,15 @@ namespace PocketToot
             catch (Exception ex)
             {
                 ErrorDispatcher.ShowError(ex, "Blocking");
+            }
+        }
+
+        private void movedToLabel_Click(object sender, EventArgs e)
+        {
+            if (_account.MovedTo != null)
+            {
+                var af = new AccountForm(_ac, _account.MovedTo);
+                af.Show();
             }
         }
     }
