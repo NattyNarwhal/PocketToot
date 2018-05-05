@@ -76,6 +76,7 @@
     <Compile Include="Types\Emoji.cs" />
     <Compile Include="Types\Error.cs" />
     <Compile Include="Types\Mention.cs" />
+    <Compile Include="Types\Notification.cs" />
     <Compile Include="Types\Relationship.cs" />
     <Compile Include="Types\Status.cs" />
     <Compile Include="Types\Tag.cs" />
