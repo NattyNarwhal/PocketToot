@@ -36,15 +36,16 @@
             this.localPublicTumelineMenuItem = new System.Windows.Forms.MenuItem();
             this.publicTimelineMenuItem = new System.Windows.Forms.MenuItem();
             this.tagTimelineMenuItem = new System.Windows.Forms.MenuItem();
+            this.favouritesMenuItem = new System.Windows.Forms.MenuItem();
+            this.sep2 = new System.Windows.Forms.MenuItem();
             this.refreshMenuItem = new System.Windows.Forms.MenuItem();
             this.showMoreMenuItem = new System.Windows.Forms.MenuItem();
             this.sep1 = new System.Windows.Forms.MenuItem();
-            this.settingsMenuItem = new System.Windows.Forms.MenuItem();
-            this.favouritesMenuItem = new System.Windows.Forms.MenuItem();
-            this.sep2 = new System.Windows.Forms.MenuItem();
-            this.statusListView = new PocketToot.TootListView();
             this.myProfileMenuItem = new System.Windows.Forms.MenuItem();
             this.sep3 = new System.Windows.Forms.MenuItem();
+            this.settingsMenuItem = new System.Windows.Forms.MenuItem();
+            this.statusListView = new PocketToot.TootListView();
+            this.notificationsMenuItem = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -60,6 +61,7 @@
             // menu
             // 
             this.menu.MenuItems.Add(this.timelineMenu);
+            this.menu.MenuItems.Add(this.notificationsMenuItem);
             this.menu.MenuItems.Add(this.favouritesMenuItem);
             this.menu.MenuItems.Add(this.sep2);
             this.menu.MenuItems.Add(this.refreshMenuItem);
@@ -92,6 +94,15 @@
             this.tagTimelineMenuItem.Text = "Hash&tag...";
             this.tagTimelineMenuItem.Click += new System.EventHandler(this.tagTimelineMenuItem_Click);
             // 
+            // favouritesMenuItem
+            // 
+            this.favouritesMenuItem.Text = "&Favourites";
+            this.favouritesMenuItem.Click += new System.EventHandler(this.favouritesMenuItem_Click);
+            // 
+            // sep2
+            // 
+            this.sep2.Text = "-";
+            // 
             // refreshMenuItem
             // 
             this.refreshMenuItem.Text = "&Refresh";
@@ -106,19 +117,19 @@
             // 
             this.sep1.Text = "-";
             // 
+            // myProfileMenuItem
+            // 
+            this.myProfileMenuItem.Text = "My &Profile";
+            this.myProfileMenuItem.Click += new System.EventHandler(this.myProfileMenuItem_Click);
+            // 
+            // sep3
+            // 
+            this.sep3.Text = "-";
+            // 
             // settingsMenuItem
             // 
             this.settingsMenuItem.Text = "&Settings...";
             this.settingsMenuItem.Click += new System.EventHandler(this.settingsMenuItem_Click);
-            // 
-            // favouritesMenuItem
-            // 
-            this.favouritesMenuItem.Text = "&Favourites";
-            this.favouritesMenuItem.Click += new System.EventHandler(this.favouritesMenuItem_Click);
-            // 
-            // sep2
-            // 
-            this.sep2.Text = "-";
             // 
             // statusListView
             // 
@@ -133,14 +144,10 @@
             this.statusListView.View = System.Windows.Forms.View.Details;
             this.statusListView.ItemActivate += new System.EventHandler(this.listView1_ItemActivate);
             // 
-            // myProfileMenuItem
+            // notificationsMenuItem
             // 
-            this.myProfileMenuItem.Text = "My &Profile";
-            this.myProfileMenuItem.Click += new System.EventHandler(this.myProfileMenuItem_Click);
-            // 
-            // sep3
-            // 
-            this.sep3.Text = "-";
+            this.notificationsMenuItem.Text = "&Notifications";
+            this.notificationsMenuItem.Click += new System.EventHandler(this.notificationsMenuItem_Click);
             // 
             // TimelineForm
             // 
@@ -174,6 +181,7 @@
         private System.Windows.Forms.MenuItem sep2;
         private System.Windows.Forms.MenuItem myProfileMenuItem;
         private System.Windows.Forms.MenuItem sep3;
+        private System.Windows.Forms.MenuItem notificationsMenuItem;
 
     }
 }

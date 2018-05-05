@@ -274,5 +274,11 @@ namespace PocketToot
             var af = new AccountForm(_ac, account);
             af.Show();
         }
+
+        private void notificationsMenuItem_Click(object sender, EventArgs e)
+        {
+            var nf = new NotificationsForm(_ac);
+            nf.Show();
+        }
     }
 }

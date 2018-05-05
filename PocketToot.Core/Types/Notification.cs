@@ -6,8 +6,13 @@ using Newtonsoft.Json;
 
 namespace PocketToot.Types
 {
-    public class Notification
+    public class Notification : IId
     {
+        public const string MENTION = "mention";
+        public const string REBLOG = "reblog";
+        public const string FAVOURITE = "favourite";
+        public const string FOLLOW = "follow";
+
         [JsonProperty("id")]
         public long Id { get; set; }
         // another stringly enum; too bad Json.NET for CF didn't have better
@@ -21,11 +26,21 @@ namespace PocketToot.Types
         [JsonProperty("status")]
         public Status Status { get; set; }
 
-        public static List<Notification> GetNotifications(ApiClient ac)
+        public static Paginated<Notification> GetNotifications(ApiClient ac,
+            long? before,
+            long? after)
         {
-            var route = "/api/v1/notifications";
+            var qs = new QueryString();
+            if (before.HasValue)
+                qs.Add("max_id", before.Value.ToString());
+            if (after.HasValue)
+                qs.Add("since_id", after.Value.ToString());
+
+            var route = string.Format("/api/v1/notifications?{0}", qs.ToQueryString());
             var json = ac.Get(route);
-            return JsonUtility.MaybeDeserialize<List<Notification>>(json);
+            var list = JsonUtility.MaybeDeserialize<List<Notification>>(json);
+            // notifications can be flipped through via first/last
+            return new Paginated<Notification>(list);
         }
 
         public static Notification GetById(ApiClient ac, long id)

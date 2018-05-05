@@ -82,6 +82,10 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\AttachmentListViewItemCollection.cs" />
+    <Compile Include="Controls\NotificationListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\NotificationListViewItemCollection.cs" />
     <Compile Include="Controls\TypedSingleColumnListView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -95,6 +99,12 @@
     </Compile>
     <Compile Include="FavouritesForm.Designer.cs">
       <DependentUpon>FavouritesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NotificationsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NotificationsForm.Designer.cs">
+      <DependentUpon>NotificationsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="TimelineForm.cs">
       <SubType>Form</SubType>
@@ -114,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FavouritesForm.resx">
       <DependentUpon>FavouritesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotificationsForm.resx">
+      <DependentUpon>NotificationsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TimelineForm.resx">
       <DependentUpon>TimelineForm.cs</DependentUpon>
